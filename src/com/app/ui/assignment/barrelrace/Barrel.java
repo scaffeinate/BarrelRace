@@ -5,17 +5,17 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 
-public class Horse {
-    
+public class Barrel {
+
     Paint mPaint;
     
-    public Horse() {
+    public Barrel() {
         mPaint = new Paint();
         mPaint.setStyle(Style.FILL);
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(Color.BLUE);
     }
     
-    public void draw(Canvas c) {
-        c.drawCircle(c.getWidth()/2+25, c.getHeight() - 50, 25, mPaint);
+    public void draw(int x, int y, int radius, Canvas c) {
+        c.drawCircle(x, y, radius, mPaint);
     }
 }

@@ -36,6 +36,12 @@ public class GameActivity extends Activity implements OnTouchListener {
                 c.drawARGB(255, 150, 250, 100);
                 Horse h = new Horse();
                 h.draw(c);
+                Barrel b1 = new Barrel();
+                b1.draw(getWidth()/2+25, getHeight()-200, 30, c);
+                Barrel b2 = new Barrel();
+                b2.draw(getWidth() - 200, 100, 30, c);
+                Barrel b3 = new Barrel();
+                b3.draw(200, 100, 30, c);
                 holder.unlockCanvasAndPost(c);
             }
         }
