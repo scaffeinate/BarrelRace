@@ -5,17 +5,18 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 
-public class Horse {
+public class Fence {
     
     Paint mPaint;
     
-    public Horse() {
+    public Fence() {
         mPaint = new Paint();
         mPaint.setStyle(Style.FILL);
         mPaint.setColor(Color.WHITE);
+        mPaint.setStrokeWidth(10);
     }
     
-    public void draw(int x, int y, int radius, Canvas c) {
-        c.drawCircle(x, y, radius, mPaint);
+    public void draw(int startX, int startY, int stopX, int stopY, Canvas c) {
+        c.drawLine(startX, startY, stopX, stopY, mPaint);
     }
 }

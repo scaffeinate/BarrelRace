@@ -34,14 +34,30 @@ public class GameActivity extends Activity implements OnTouchListener {
                 
                 Canvas c = holder.lockCanvas();
                 c.drawARGB(255, 150, 250, 100);
+                
+                Fence f1 = new Fence();
+                f1.draw(20, 20, getWidth()-20, 20, c);
+                
+                Fence f2 = new Fence();
+                f2.draw(20, 20, 20, getHeight()-100, c);
+                
+                Fence f3 = new Fence();
+                f3.draw(getWidth()-20, 20, getWidth()-20, getHeight()-100, c);
+                
+                Fence f4 = new Fence();
+                f4.draw(20, getHeight()-100, (getWidth()/2)-50, getHeight()-100, c);
+                
+                Fence f5 = new Fence();
+                f5.draw(getWidth()-20, getHeight()-100, (getWidth()/2)+50, getHeight()-100, c);
+                
                 Horse h = new Horse();
-                h.draw(c);
+                h.draw(c.getWidth()/2, c.getHeight() - 50, 20, c);
                 Barrel b1 = new Barrel();
-                b1.draw(getWidth()/2+25, getHeight()-200, 30, c);
+                b1.draw(getWidth()/2, getHeight()-225, 25, c);
                 Barrel b2 = new Barrel();
-                b2.draw(getWidth() - 200, 100, 30, c);
+                b2.draw(getWidth() - 200, 125, 25, c);
                 Barrel b3 = new Barrel();
-                b3.draw(200, 100, 30, c);
+                b3.draw(200, 125, 25, c);
                 holder.unlockCanvasAndPost(c);
             }
         }
