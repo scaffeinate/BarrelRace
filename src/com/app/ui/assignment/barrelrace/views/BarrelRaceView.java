@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -27,7 +28,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     private Barrel barrel1, barrel2, barrel3;
     
     private Bitmap barrelBitmap;
-    float x,y;
+    private float x,y, barrel1X, barrel1Y, barrel2X, barrel2Y, barrel3X, barrel3Y;
     boolean isTouched = false;
     
     public BarrelRaceView(Context context, int width, int height) {
@@ -65,17 +66,34 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
             
             horse = new Horse();
 
-            fence1.draw(20, 20, getWidth()-20, 20, canvas);
-            fence2.draw(20, 20, 20, getHeight()-80, canvas);
-            fence3.draw(getWidth()-20, 20, getWidth()-20, getHeight()-80, canvas);
-            fence4.draw(20, getHeight()-80, (getWidth()/2)-50, getHeight()-80, canvas);
-            fence5.draw(getWidth()-20, getHeight()-80, (getWidth()/2)+50, getHeight()-80, canvas);
+            barrel1X = (getWidth()/2);
+            barrel1Y = getHeight()-225;
             
-            barrel1.draw(barrelBitmap, getWidth()/2-35, getHeight()-245, canvas);
-            barrel2.draw(barrelBitmap, getWidth() - 235, 100, canvas);
-            barrel3.draw(barrelBitmap, 165, 100, canvas);
+            barrel2X = (getWidth()/2) + 250;
+            barrel2Y = 125;
+            
+            barrel3X = (getWidth()/2) - 250;
+            barrel3Y = 125;
+            
+            fence1.draw(30, 30, getWidth()-30, 30, canvas);
+            fence2.draw(30, 30, 30, getHeight()-80, canvas);
+            fence3.draw(getWidth()-30, 30, getWidth()-30, getHeight()-80, canvas);
+            fence4.draw(30, getHeight()-80, (getWidth()/2)-50, getHeight()-80, canvas);
+            fence5.draw(getWidth()-30, getHeight()-80, (getWidth()/2)+50, getHeight()-80, canvas);
+            
+            barrel1.draw(barrelBitmap, barrel1X, barrel1Y, canvas);
+            barrel2.draw(barrelBitmap, barrel2X, barrel2Y, canvas);
+            barrel3.draw(barrelBitmap, barrel3X, barrel3Y, canvas);
             
             horse.draw(x, y, 20, canvas);
+            
+            if((Math.pow((x - barrel1X), 2) + Math.pow((y - barrel1Y), 2)) <= Math.pow(45, 2)) {
+                Log.i("awesome", "Collision Detected Barrel 1");
+            } else if((Math.pow((x - barrel2X), 2) + Math.pow((y - barrel2Y), 2)) <= Math.pow(45, 2)) {
+                Log.i("awesome", "Collision Detected Barrel 2");
+            } else if((Math.pow((x - barrel3X), 2) + Math.pow((y - barrel3Y), 2)) <= Math.pow(45, 2)) {
+                Log.i("awesome", "Collision Detected Barrel 3");
+            }
             
             holder.unlockCanvasAndPost(canvas);
         }
@@ -106,13 +124,6 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         // TODO Auto-generated method stub
-        
-        try {
-            Thread.sleep(20);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         
         x = event.getX();
         y = event.getY();

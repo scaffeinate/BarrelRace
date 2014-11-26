@@ -1,12 +1,11 @@
 package com.app.ui.assignment.barrelrace.objects;
 
-import com.app.ui.assignment.barrelrace.R;
-import com.app.ui.assignment.barrelrace.R.color;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+
+import com.app.ui.assignment.barrelrace.R;
 
 public class Fence {
     
@@ -16,7 +15,7 @@ public class Fence {
         mPaint = new Paint();
         mPaint.setStyle(Style.FILL);
         mPaint.setColor(c.getResources().getColor(R.color.fence_color));
-        mPaint.setStrokeWidth(10);
+        mPaint.setStrokeWidth(5);
     }
     
     public void draw(int startX, int startY, int stopX, int stopY, Canvas c) {

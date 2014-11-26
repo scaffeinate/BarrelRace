@@ -16,8 +16,8 @@ public class Barrel {
         mPaint.setColor(Color.BLUE);
     }
     
-    public void draw(Bitmap barrel, int x, int y, Canvas c) {
-        /*c.drawCircle(x, y, radius, mPaint);*/
-        c.drawBitmap(barrel, x, y, null);
+    public void draw(Bitmap barrel, float x, float y, Canvas c) {
+        c.drawCircle(x, y, 25, mPaint);
+        /*c.drawBitmap(barrel, x, y, null);*/
     }
 }
