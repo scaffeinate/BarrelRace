@@ -1,14 +1,13 @@
 package com.app.ui.assignment.barrelrace;
 
+import android.app.Activity;
+import android.graphics.Point;
+import android.os.Bundle;
+import android.view.Display;
+
 import com.app.ui.assignment.barrelrace.views.BarrelRaceView;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
-
-public class GameActivity extends Activity implements OnTouchListener {
+public class GameActivity extends Activity {
 
     private BarrelRaceView barrelRaceView;
     
@@ -16,8 +15,10 @@ public class GameActivity extends Activity implements OnTouchListener {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        barrelRaceView = new BarrelRaceView(this);
-        barrelRaceView.setOnTouchListener(this);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+        barrelRaceView = new BarrelRaceView(this, point.x, point.y);
         setContentView(barrelRaceView);
     }
 
@@ -33,12 +34,6 @@ public class GameActivity extends Activity implements OnTouchListener {
         // TODO Auto-generated method stub
         super.onPause();
         barrelRaceView.pause();
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        // TODO Auto-generated method stub
-        return false;
     }
     
 }

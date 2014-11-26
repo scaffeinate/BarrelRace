@@ -1,20 +1,21 @@
 package com.app.ui.assignment.barrelrace.views;
 
-import com.app.ui.assignment.barrelrace.R;
-import com.app.ui.assignment.barrelrace.R.color;
-import com.app.ui.assignment.barrelrace.R.drawable;
-import com.app.ui.assignment.barrelrace.objects.Barrel;
-import com.app.ui.assignment.barrelrace.objects.Fence;
-import com.app.ui.assignment.barrelrace.objects.Horse;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnTouchListener;
 
-public class BarrelRaceView extends SurfaceView implements Runnable {
+import com.app.ui.assignment.barrelrace.R;
+import com.app.ui.assignment.barrelrace.objects.Barrel;
+import com.app.ui.assignment.barrelrace.objects.Fence;
+import com.app.ui.assignment.barrelrace.objects.Horse;
+
+public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchListener {
 
     Thread t = null;
     SurfaceHolder holder;
@@ -26,12 +27,17 @@ public class BarrelRaceView extends SurfaceView implements Runnable {
     private Barrel barrel1, barrel2, barrel3;
     
     private Bitmap barrelBitmap;
+    float x,y;
+    boolean isTouched = false;
     
-    public BarrelRaceView(Context context) {
+    public BarrelRaceView(Context context, int width, int height) {
         super(context);
         // TODO Auto-generated constructor stub
         this.context = context;
+        x = width/2;
+        y = height - 50;
         holder = getHolder();
+        setOnTouchListener(this);
     }
 
     @Override
@@ -58,7 +64,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable {
             barrel3 = new Barrel();
             
             horse = new Horse();
-            
+
             fence1.draw(20, 20, getWidth()-20, 20, canvas);
             fence2.draw(20, 20, 20, getHeight()-80, canvas);
             fence3.draw(getWidth()-20, 20, getWidth()-20, getHeight()-80, canvas);
@@ -69,7 +75,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable {
             barrel2.draw(barrelBitmap, getWidth() - 235, 100, canvas);
             barrel3.draw(barrelBitmap, 165, 100, canvas);
             
-            horse.draw(canvas.getWidth()/2, canvas.getHeight() - 50, 20, canvas);
+            horse.draw(x, y, 20, canvas);
             
             holder.unlockCanvasAndPost(canvas);
         }
@@ -95,6 +101,34 @@ public class BarrelRaceView extends SurfaceView implements Runnable {
         isThreadRunning = true;
         t = new Thread(this);
         t.start();
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        // TODO Auto-generated method stub
+        
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        x = event.getX();
+        y = event.getY();
+        
+        switch(event.getAction()) {
+        case MotionEvent.ACTION_DOWN:
+            isTouched = true;
+            break;
+        case MotionEvent.ACTION_UP:
+            isTouched = false;
+            break;
+        case MotionEvent.ACTION_MOVE:
+            isTouched = true;
+            break;
+        }
+        return true;
     }
 
 }

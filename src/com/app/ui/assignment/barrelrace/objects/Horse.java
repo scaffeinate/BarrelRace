@@ -15,7 +15,7 @@ public class Horse {
         mPaint.setColor(Color.RED);
     }
     
-    public void draw(int x, int y, int radius, Canvas c) {
+    public void draw(float x, float y, int radius, Canvas c) {
         c.drawCircle(x, y, radius, mPaint);
     }
 }
