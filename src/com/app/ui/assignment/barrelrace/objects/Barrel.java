@@ -1,23 +1,23 @@
 package com.app.ui.assignment.barrelrace.objects;
 
-import android.graphics.Bitmap;
+import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+
+import com.app.ui.assignment.barrelrace.R;
 
 public class Barrel {
 
     Paint mPaint;
     
-    public Barrel() {
+    public Barrel(Context context) {
         mPaint = new Paint();
         mPaint.setStyle(Style.FILL);
-        mPaint.setColor(Color.BLUE);
+        mPaint.setColor(context.getResources().getColor(R.color.barrel_color));
     }
     
-    public void draw(Bitmap barrel, float x, float y, Canvas c) {
-        c.drawCircle(x, y, 25, mPaint);
-        /*c.drawBitmap(barrel, x, y, null);*/
+    public void draw(float x, float y, float radius, Canvas c) {
+        c.drawCircle(x, y, radius, mPaint);
     }
 }

@@ -1,10 +1,7 @@
 package com.app.ui.assignment.barrelrace.views;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -27,8 +24,8 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     private Horse horse;
     private Barrel barrel1, barrel2, barrel3;
     
-    private Bitmap barrelBitmap;
     private float x,y, barrel1X, barrel1Y, barrel2X, barrel2Y, barrel3X, barrel3Y;
+    private float horseRadius, barrelRadius;
     boolean isTouched = false;
     
     public BarrelRaceView(Context context, int width, int height) {
@@ -37,6 +34,8 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         this.context = context;
         x = width/2;
         y = height - 50;
+        horseRadius = 25;
+        barrelRadius = 25;
         holder = getHolder();
         setOnTouchListener(this);
     }
@@ -58,11 +57,9 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
             fence4 = new Fence(context);
             fence5 = new Fence(context);
             
-            barrelBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_barrel);
-            
-            barrel1 = new Barrel();
-            barrel2 = new Barrel();
-            barrel3 = new Barrel();
+            barrel1 = new Barrel(context);
+            barrel2 = new Barrel(context);
+            barrel3 = new Barrel(context);
             
             horse = new Horse();
 
@@ -81,24 +78,64 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
             fence4.draw(30, getHeight()-80, (getWidth()/2)-50, getHeight()-80, canvas);
             fence5.draw(getWidth()-30, getHeight()-80, (getWidth()/2)+50, getHeight()-80, canvas);
             
-            barrel1.draw(barrelBitmap, barrel1X, barrel1Y, canvas);
-            barrel2.draw(barrelBitmap, barrel2X, barrel2Y, canvas);
-            barrel3.draw(barrelBitmap, barrel3X, barrel3Y, canvas);
+            barrel1.draw(barrel1X, barrel1Y, barrelRadius, canvas);
+            barrel2.draw(barrel2X, barrel2Y, barrelRadius, canvas);
+            barrel3.draw(barrel3X, barrel3Y, barrelRadius, canvas);
             
             horse.draw(x, y, 20, canvas);
             
-            if((Math.pow((x - barrel1X), 2) + Math.pow((y - barrel1Y), 2)) <= Math.pow(45, 2)) {
-                Log.i("awesome", "Collision Detected Barrel 1");
-            } else if((Math.pow((x - barrel2X), 2) + Math.pow((y - barrel2Y), 2)) <= Math.pow(45, 2)) {
-                Log.i("awesome", "Collision Detected Barrel 2");
-            } else if((Math.pow((x - barrel3X), 2) + Math.pow((y - barrel3Y), 2)) <= Math.pow(45, 2)) {
-                Log.i("awesome", "Collision Detected Barrel 3");
+            if(checkCollision()) {
+                handleCollision();
             }
             
             holder.unlockCanvasAndPost(canvas);
         }
     }
     
+    private void handleCollision() {
+        // TODO Auto-generated method stub
+    }
+
+    private boolean checkCollision() {
+        // TODO Auto-generated method stub
+        
+        boolean collidesBarrel1 = (Math.pow((x - barrel1X), 2) + Math.pow((y - barrel1Y), 2)) 
+                <= Math.pow((horseRadius + barrelRadius), 2);  
+        boolean collidesBarrel2 = (Math.pow((x - barrel2X), 2) + Math.pow((y - barrel2Y), 2)) 
+                <= Math.pow((horseRadius + barrelRadius), 2);
+        boolean collidesBarrel3 = (Math.pow((x - barrel3X), 2) + Math.pow((y - barrel3Y), 2)) 
+                <= Math.pow((horseRadius + barrelRadius), 2); 
+        
+        if(collidesBarrel1) {
+            readjustHorse(barrel1X, barrel1Y);
+            return true;
+        } else if(collidesBarrel2) {
+            readjustHorse(barrel2X, barrel2Y);
+            return true;
+        } else if(collidesBarrel3) {
+            readjustHorse(barrel3X, barrel3Y);
+            return true;
+        }
+        
+        return false;
+    }
+
+    private void readjustHorse(float bX, float bY) {
+        // TODO Auto-generated method stub
+        if(x > bX) {
+            x = x + 1f;
+        } else {
+            x = x - 1f;
+        }
+        
+        if(y > bY) {
+            y = y + 1f;
+        } else {
+            y = y - 1f;
+        }
+        
+    }
+
     public void pause() {
         isThreadRunning = false;
         while(true) {
