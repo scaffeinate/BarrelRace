@@ -1,7 +1,7 @@
 package com.app.ui.assignment.barrelrace;
 
+import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 
@@ -9,10 +9,10 @@ public class Fence {
     
     Paint mPaint;
     
-    public Fence() {
+    public Fence(Context c) {
         mPaint = new Paint();
         mPaint.setStyle(Style.FILL);
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(c.getResources().getColor(R.color.fence_color));
         mPaint.setStrokeWidth(10);
     }
     

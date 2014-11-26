@@ -1,5 +1,6 @@
 package com.app.ui.assignment.barrelrace;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,7 +16,8 @@ public class Barrel {
         mPaint.setColor(Color.BLUE);
     }
     
-    public void draw(int x, int y, int radius, Canvas c) {
-        c.drawCircle(x, y, radius, mPaint);
+    public void draw(Bitmap barrel, int x, int y, Canvas c) {
+        /*c.drawCircle(x, y, radius, mPaint);*/
+        c.drawBitmap(barrel, x, y, null);
     }
 }

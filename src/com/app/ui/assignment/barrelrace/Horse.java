@@ -12,7 +12,7 @@ public class Horse {
     public Horse() {
         mPaint = new Paint();
         mPaint.setStyle(Style.FILL);
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(Color.RED);
     }
     
     public void draw(int x, int y, int radius, Canvas c) {
