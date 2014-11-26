@@ -2,6 +2,8 @@ package com.app.ui.assignment.barrelrace.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.media.MediaPlayer;
+import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -28,6 +30,9 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     private float horseRadius, barrelRadius;
     boolean isTouched = false;
     
+    private Vibrator vibrator;
+    private MediaPlayer bMedia;
+    
     public BarrelRaceView(Context context, int width, int height) {
         super(context);
         // TODO Auto-generated constructor stub
@@ -37,6 +42,8 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         horseRadius = 25;
         barrelRadius = 25;
         holder = getHolder();
+        vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        bMedia = MediaPlayer.create(context, R.raw.barrel_hit);
         setOnTouchListener(this);
     }
 
@@ -94,6 +101,10 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     
     private void handleCollision() {
         // TODO Auto-generated method stub
+        bMedia.start();
+        if(vibrator.hasVibrator()) {
+            vibrator.vibrate(50);
+        }
     }
 
     private boolean checkCollision() {
