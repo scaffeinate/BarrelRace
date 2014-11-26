@@ -1,4 +1,7 @@
-package com.app.ui.assignment.barrelrace;
+package com.app.ui.assignment.barrelrace.objects;
+
+import com.app.ui.assignment.barrelrace.R;
+import com.app.ui.assignment.barrelrace.R.color;
 
 import android.content.Context;
 import android.graphics.Canvas;

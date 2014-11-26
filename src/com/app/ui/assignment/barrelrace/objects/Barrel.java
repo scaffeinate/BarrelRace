@@ -1,4 +1,4 @@
-package com.app.ui.assignment.barrelrace;
+package com.app.ui.assignment.barrelrace.objects;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
