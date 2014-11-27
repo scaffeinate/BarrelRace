@@ -2,7 +2,6 @@ package com.app.ui.assignment.barrelrace.views;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.media.MediaPlayer;
 import android.os.Vibrator;
@@ -12,7 +11,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-import com.app.ui.assignment.barrelrace.MainActivity;
 import com.app.ui.assignment.barrelrace.R;
 import com.app.ui.assignment.barrelrace.objects.Barrel;
 import com.app.ui.assignment.barrelrace.objects.Fence;
@@ -159,8 +157,6 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
                 isThreadRunning = false;
                 t.interrupt();
                 if(!isGameFinished) {
-                    Intent toMain = new Intent(context, MainActivity.class);
-                    context.startActivity(toMain);
                     ((Activity) context).finish();
                     isGameFinished = true;
                 }
@@ -173,19 +169,23 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     private boolean checkCircleBarrel(Barrel barrel) {
         // TODO Auto-generated method stub
         
-        if(x >= (barrel.getX()+barrelRadius+10) && y >= (barrel.getY()+barrelRadius+10)) {
+        if(x >= (barrel.getX()+barrelRadius+10) 
+                && y >= (barrel.getY()+barrelRadius+10)) {
             barrel.setRightBottomQuad(true);
         }
         
-        if(x >= (barrel.getX()+barrelRadius+10) && y <= (barrel.getY()-barrelRadius-10)) {
+        if(x >= (barrel.getX()+barrelRadius+10) 
+                && y <= (barrel.getY()-barrelRadius-10)) {
             barrel.setRightTopQuad(true);
         }
         
-        if(x <= (barrel.getX()-barrelRadius-10) && y <= (barrel.getY()-barrelRadius-10)) {
+        if(x <= (barrel.getX()-barrelRadius-10) 
+                && y <= (barrel.getY()-barrelRadius-10)) {
             barrel.setLeftTopQuad(true);
         }
         
-        if(x <= (barrel.getX()-barrelRadius-10) && y >= (barrel.getY()+barrelRadius+10)) {
+        if(x <= (barrel.getX()-barrelRadius-10) 
+                && y >= (barrel.getY()+barrelRadius+10)) {
             barrel.setLeftBottomQuad(true);
         }
         
