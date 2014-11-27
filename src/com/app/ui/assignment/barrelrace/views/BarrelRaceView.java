@@ -35,9 +35,10 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     private float fence5StartX, fence5StartY, fence5StopX, fence5StopY;
     private float horseRadius, barrelRadius;
     boolean isTouched = false;
+    boolean hasEntered = false;
     
     private Vibrator vibrator;
-    private MediaPlayer bMedia;
+    private MediaPlayer bMedia, fMedia;
     
     public BarrelRaceView(Context context, int width, int height) {
         super(context);
@@ -48,6 +49,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         holder = getHolder();
         vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         bMedia = MediaPlayer.create(context, R.raw.barrel_hit);
+        fMedia = MediaPlayer.create(context, R.raw.fence_hit);
         setOnTouchListener(this);
     }
 
@@ -133,20 +135,57 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
             
             horse.draw(x, y, 20, canvas);
             
+            if(y <= canvas.getHeight()-60-horseRadius) {
+                hasEntered = true;
+            } else {
+                hasEntered = false;
+            }
+            
             if(collides()) {
                 handleCollision();
+            }
+            
+            if(collidesFence(fence1)) {
+                fMedia.start();
             }
             
             holder.unlockCanvasAndPost(canvas);
         }
     }
     
+    private boolean collidesFence(Fence fence) {
+        // TODO Auto-generated method stub
+        
+        if(x <= (horseRadius+30)) {
+            x += 1f;
+        } else if(x >= (canvas.getWidth()-30-horseRadius)) {
+            x -= 1f;
+        } else if(y <= (horseRadius+30)) {
+            y += 1f;
+        } else if(y >= canvas.getHeight()-80-horseRadius) {
+            if(x >= (canvas.getWidth()/2)-50-horseRadius && x <= ((canvas.getWidth()/2)+50+horseRadius)) {
+                return false;
+            } else {
+                if(hasEntered) {
+                    y -= 1f;
+                } else {
+                    y = canvas.getHeight()-50;
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+        
+        return true;
+    }
+
     private void handleCollision() {
         // TODO Auto-generated method stub
         bMedia.start();
-        if(vibrator.hasVibrator()) {
-            vibrator.vibrate(50);
-        }   
+        /*if(vibrator.hasVibrator()) {
+            vibrator.vibrate(10);
+        }   */
     }
 
     private boolean collides() {
