@@ -9,16 +9,53 @@ import com.app.ui.assignment.barrelrace.R;
 
 public class Fence {
     
-    Paint mPaint;
+    private Paint mPaint;
+    private float startX, startY, stopX, stopY;
     
-    public Fence(Context c) {
+    public Fence(Context c, float startX, float startY, float stopX, float stopY) {
+        this.startX = startX;
+        this.startY = startY;
+        this.stopX = stopX;
+        this.stopY = stopY;
         mPaint = new Paint();
         mPaint.setStyle(Style.FILL);
         mPaint.setColor(c.getResources().getColor(R.color.fence_color));
         mPaint.setStrokeWidth(5);
     }
-    
-    public void draw(int startX, int startY, int stopX, int stopY, Canvas c) {
+
+    public void draw(Canvas c) {
         c.drawLine(startX, startY, stopX, stopY, mPaint);
+    }
+    
+    public float getStartX() {
+        return startX;
+    }
+
+    public void setStartX(float startX) {
+        this.startX = startX;
+    }
+
+    public float getStartY() {
+        return startY;
+    }
+
+    public void setStartY(float startY) {
+        this.startY = startY;
+    }
+
+    public float getStopX() {
+        return stopX;
+    }
+
+    public void setStopX(float stopX) {
+        this.stopX = stopX;
+    }
+
+    public float getStopY() {
+        return stopY;
+    }
+
+    public void setStopY(float stopY) {
+        this.stopY = stopY;
     }
 }
