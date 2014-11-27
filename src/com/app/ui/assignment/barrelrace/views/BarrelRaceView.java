@@ -2,6 +2,7 @@ package com.app.ui.assignment.barrelrace.views;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.media.MediaPlayer;
 import android.os.Vibrator;
@@ -11,6 +12,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import com.app.ui.assignment.barrelrace.FailureActivity;
 import com.app.ui.assignment.barrelrace.R;
 import com.app.ui.assignment.barrelrace.objects.Barrel;
 import com.app.ui.assignment.barrelrace.objects.Fence;
@@ -221,10 +223,21 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
 
     private void handleCollision() {
         // TODO Auto-generated method stub
+        
         bMedia.start();
         if(vibrator.hasVibrator()) {
-            vibrator.vibrate(10);
-        }   
+            vibrator.vibrate(100);
+        }
+        
+        isThreadRunning = false;
+        t.interrupt();
+        
+        if(!isGameFinished) {
+            Intent toFailureActivity = new Intent(context, FailureActivity.class);
+            context.startActivity(toFailureActivity);
+            ((Activity) context).finish();
+            isGameFinished = true;
+        }
     }
 
     private boolean collides() {
