@@ -8,9 +8,31 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.app.ui.assignment.barrelrace.MainActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/buttonPlay"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:text="@string/play" />
+
+    <Button
+        android:id="@+id/buttonScores"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonPlay"
+        android:layout_below="@+id/buttonPlay"
+        android:layout_marginTop="35dp"
+        android:text="@string/view_scores" />
+
+    <Button
+        android:id="@+id/buttonSettings"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonScores"
+        android:layout_below="@+id/buttonScores"
+        android:layout_marginTop="35dp"
+        android:text="@string/settings" />
 
 </RelativeLayout>
