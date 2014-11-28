@@ -42,9 +42,10 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     private float fence4StartX, fence4StartY, fence4StopX, fence4StopY;
     private float fence5StartX, fence5StartY, fence5StopX, fence5StopY;
     private float horseRadius, barrelRadius;
-    boolean hasEntered = false;
-    boolean isGameFinished = false;
-    boolean isPenaltyReduced = false;
+    private boolean hasEntered = false;
+    private boolean isGameFinished = false;
+    private boolean isPenaltyReduced = false;
+    private Object TIMER_LOCK = new Object();
     
     private long startTime = 0L, timeDiffMil = 0L;
     
@@ -200,7 +201,9 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         // TODO Auto-generated method stub
         if(!isPenaltyReduced) {
             fMedia.start();
-            startTime -= 5000;
+            synchronized (TIMER_LOCK) {
+                startTime -= 5000;
+            }
             isPenaltyReduced = true;
         }
     }
@@ -261,15 +264,14 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     private void handleCollision() {
         // TODO Auto-generated method stub
         
-        bMedia.start();
-        if(vibrator.hasVibrator()) {
-            vibrator.vibrate(100);
-        }
-        
         isThreadRunning = false;
         t.interrupt();
         
         if(!isGameFinished) {
+            bMedia.start();
+            if(vibrator.hasVibrator()) {
+                vibrator.vibrate(100);
+            }
             Intent toFailureActivity = new Intent(context, FailureActivity.class);
             context.startActivity(toFailureActivity);
             ((Activity) context).finish();
@@ -323,10 +325,8 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            
             break;
         }
-        
         t = null;
     }
     
