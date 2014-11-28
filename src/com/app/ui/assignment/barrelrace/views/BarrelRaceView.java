@@ -5,12 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.media.MediaPlayer;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.os.Vibrator;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
+import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.TextView;
 
 import com.app.ui.assignment.barrelrace.FailureActivity;
 import com.app.ui.assignment.barrelrace.R;
@@ -18,7 +23,7 @@ import com.app.ui.assignment.barrelrace.objects.Barrel;
 import com.app.ui.assignment.barrelrace.objects.Fence;
 import com.app.ui.assignment.barrelrace.objects.Horse;
 
-public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchListener {
+public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchListener, Callback {
 
     Thread t = null;
     SurfaceHolder holder;
@@ -37,25 +42,46 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     private float fence4StartX, fence4StartY, fence4StopX, fence4StopY;
     private float fence5StartX, fence5StartY, fence5StopX, fence5StopY;
     private float horseRadius, barrelRadius;
-    boolean isTouched = false;
     boolean hasEntered = false;
     boolean isGameFinished = false;
-    float left, right, top, bottom;
+    boolean isPenaltyReduced = false;
+    
+    private long startTime = 0L, timeDiffMil = 0L;
     
     private Vibrator vibrator;
     private MediaPlayer bMedia, fMedia;
+    private TextView textViewTime;
+    private Handler handler;
     
-    public BarrelRaceView(Context context, int width, int height) {
-        super(context);
+    public BarrelRaceView(Context context, AttributeSet attrs) {
+        super(context, attrs);
         // TODO Auto-generated constructor stub
+        getHolder().addCallback(this);
+    }
+
+    public void initialize(Context context, int width, int height, TextView textViewTime) {
         this.context = context;
-        initalizeCoordinates(width, height);
-        initializeObject();
         holder = getHolder();
+        initalizeCoordinates(width, height);
+        initializeObjects();
+        initializeMedia();
+        initializeTimer();
+        this.textViewTime = textViewTime;
+        setOnTouchListener(this);
+    }
+
+    private void initializeTimer() {
+        // TODO Auto-generated method stub
+        startTime = SystemClock.uptimeMillis();
+        handler = new Handler();
+        handler.postDelayed(updateTimer, 0);
+    }
+
+    private void initializeMedia() {
+        // TODO Auto-generated method stub
         vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         bMedia = MediaPlayer.create(context, R.raw.barrel_hit);
         fMedia = MediaPlayer.create(context, R.raw.fence_hit);
-        setOnTouchListener(this);
     }
 
     private void initalizeCoordinates(float width, float height) {
@@ -101,7 +127,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         
     }
 
-    private void initializeObject() {
+    private void initializeObjects() {
         // TODO Auto-generated method stub
         
         horse = new Horse();
@@ -150,8 +176,10 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
                 handleCollision();
             }
             
-            if(collidesFence(fence1)) {
-                fMedia.start();
+            if(collidesFence()) {
+                handleCollisionWithFence();
+            } else {
+                isPenaltyReduced = false;
             }
             
             if(checkCircleBarrel(barrel1) && checkCircleBarrel(barrel2) 
@@ -168,6 +196,15 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         }
     }
     
+    private void handleCollisionWithFence() {
+        // TODO Auto-generated method stub
+        if(!isPenaltyReduced) {
+            fMedia.start();
+            startTime -= 5000;
+            isPenaltyReduced = true;
+        }
+    }
+
     private boolean checkCircleBarrel(Barrel barrel) {
         // TODO Auto-generated method stub
         
@@ -194,7 +231,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         return hasEntered && barrel.isCircled();
     }
 
-    private boolean collidesFence(Fence fence) {
+    private boolean collidesFence() {
         // TODO Auto-generated method stub
         
         if(x <= (horseRadius+30)) {
@@ -305,19 +342,47 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         
         x = event.getX();
         y = event.getY();
-        
-        switch(event.getAction()) {
-        case MotionEvent.ACTION_DOWN:
-            isTouched = true;
-            break;
-        case MotionEvent.ACTION_UP:
-            isTouched = false;
-            break;
-        case MotionEvent.ACTION_MOVE:
-            isTouched = true;
-            break;
-        }
+       
         return true;
     }
 
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width,
+            int height) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    private Runnable updateTimer = new Runnable() {
+
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            timeDiffMil = (SystemClock.uptimeMillis() - startTime);
+            
+            int timeDiff = (int) (timeDiffMil/1000);
+            int minutes = timeDiff/60;
+            int seconds = timeDiff % 60;
+            int milliseconds = (int) (timeDiffMil % 1000);
+        
+            textViewTime.setText(minutes + ":" + String.format("%02d", seconds) 
+                    + ":" + String.format("%03d", milliseconds));
+        
+            handler.postDelayed(this, 0);
+        }
+        
+    };
+    
 }
