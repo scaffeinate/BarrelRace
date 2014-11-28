@@ -33,8 +33,7 @@ public class FailureActivity extends Activity implements OnClickListener {
             startActivity(toGameActivity);
             break;
         case R.id.buttonHome:
-            Intent toMain = new Intent(this, MainActivity.class);
-            startActivity(toMain);
+            finish();
             break;
         }
     }
