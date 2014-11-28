@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.app.ui.assignment.barrelrace.FailureActivity;
 import com.app.ui.assignment.barrelrace.R;
+import com.app.ui.assignment.barrelrace.SuccessActivity;
 import com.app.ui.assignment.barrelrace.objects.Barrel;
 import com.app.ui.assignment.barrelrace.objects.Fence;
 import com.app.ui.assignment.barrelrace.objects.Horse;
@@ -188,6 +189,8 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
                 isThreadRunning = false;
                 t.interrupt();
                 if(!isGameFinished) {
+                    Intent toSuccessActivity = new Intent(context, SuccessActivity.class);
+                    context.startActivity(toSuccessActivity);
                     ((Activity) context).finish();
                     isGameFinished = true;
                 }
