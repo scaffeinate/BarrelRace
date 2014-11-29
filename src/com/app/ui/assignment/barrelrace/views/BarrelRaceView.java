@@ -190,6 +190,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
                 t.interrupt();
                 if(!isGameFinished) {
                     Intent toSuccessActivity = new Intent(context, SuccessActivity.class);
+                    toSuccessActivity.putExtra("timeElapsed", SystemClock.uptimeMillis()-startTime);
                     context.startActivity(toSuccessActivity);
                     ((Activity) context).finish();
                     isGameFinished = true;
