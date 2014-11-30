@@ -115,27 +115,27 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
         barrel3X = (width/2)-250;
         barrel3Y = 125;
         
-        fence1StartX = 30;
+        fence1StartX = 100;
         fence1StartY = 30;
-        fence1StopX = width-30;
+        fence1StopX = width-100;
         fence1StopY = 30;
         
-        fence2StartX = 30;
+        fence2StartX = 100;
         fence2StartY = 30;
-        fence2StopX = 30;
+        fence2StopX = 100;
         fence2StopY = height-80;
         
-        fence3StartX = width-30;
+        fence3StartX = width-100;
         fence3StartY = 30;
-        fence3StopX = width-30;
+        fence3StopX = width-100;
         fence3StopY = height-80;
         
-        fence4StartX = 30;
+        fence4StartX = 100;
         fence4StartY = height-80;
         fence4StopX = (width/2)-50;
         fence4StopY = height-80;
         
-        fence5StartX = width-30;
+        fence5StartX = width-100;
         fence5StartY = height-80;
         fence5StopX = (width/2)+50;
         fence5StopY = height-80;
@@ -282,30 +282,30 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
         
         boolean collidesFence = false;
         
-        if(x <= (horseRadius+30)) {
-            x = 30+horseRadius;
+        if(x <= (horseRadius+fence2StartX)) {
+            x = fence2StartX+horseRadius;
             collidesFence = true;
         }  
         
-        if(x >= (canvas.getWidth()-30-horseRadius)) {
-            x = canvas.getWidth()-30-horseRadius;
+        if(x >= (fence3StartX-horseRadius)) {
+            x = fence3StartX-horseRadius;
             collidesFence = true;
         } 
         
-        if(y <= (horseRadius+30)) {
-            y = 30+horseRadius;
+        if(y <= (horseRadius+fence1StartY)) {
+            y = horseRadius+fence1StartY;
             collidesFence = true;
         }  
         
-        if(y >= canvas.getHeight()-80-horseRadius) {
-            if(x >= (canvas.getWidth()/2)-horseRadius && x <= ((canvas.getWidth()/2)+horseRadius)) {
+        if(y >= fence4StartY-horseRadius) {
+            if(x >= fence4StopX && x <= fence5StopX) {
                 collidesFence = false;
             } else {
                 if(hasEntered) {
-                    y = canvas.getHeight()-80-horseRadius;
+                    y = fence4StartY-horseRadius;
                     collidesFence = true;
                 } else {
-                    y = canvas.getHeight()-50;
+                    y = height-50;
                     collidesFence = false;
                 }
             }
