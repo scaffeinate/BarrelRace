@@ -20,4 +20,13 @@
         android:textColor="@android:color/black"
         android:textSize="20sp" />
 
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/textViewTime"
+        android:background="@drawable/start_button_bg" />
+
 </RelativeLayout>

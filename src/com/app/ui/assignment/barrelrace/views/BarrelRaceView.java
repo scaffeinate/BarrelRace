@@ -15,12 +15,10 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
-import android.view.View;
-import android.view.View.OnTouchListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.app.ui.assignment.barrelrace.FailureActivity;
@@ -30,7 +28,7 @@ import com.app.ui.assignment.barrelrace.objects.Barrel;
 import com.app.ui.assignment.barrelrace.objects.Fence;
 import com.app.ui.assignment.barrelrace.objects.Horse;
 
-public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchListener, SensorEventListener, Callback {
+public class BarrelRaceView extends SurfaceView implements Runnable, SensorEventListener, Callback {
 
     private SensorManager sensorManager;
     
@@ -83,12 +81,10 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         initalizeCoordinates();
         initializeObjects();
         initializeMedia();
-        initializeTimer();
         this.textViewTime = textViewTime;
-        setOnTouchListener(this);
     }
 
-    private void initializeTimer() {
+    public void startTimer() {
         // TODO Auto-generated method stub
         startTime = SystemClock.uptimeMillis();
         handler = new Handler();
@@ -168,77 +164,75 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     public void run() {
         // TODO Auto-generated method stub
         while(isThreadRunning) {
-            if(!holder.getSurface().isValid()) {
-                continue;
-            }
-            
-            canvas = holder.lockCanvas();
-            canvas.drawColor(context.getResources().getColor(R.color.bg_color));
-            
-            fence1.draw(canvas);
-            fence2.draw(canvas);
-            fence3.draw(canvas);
-            fence4.draw(canvas);
-            fence5.draw(canvas);
-            
-            barrel1.draw(canvas);
-            barrel2.draw(canvas);
-            barrel3.draw(canvas);
-            
-            x += accelX;
-            y += accelY;
-            
-            if(y > height-50) {
-                y = height-50;
-            }
-            
-            horse.draw(x, y, 20, canvas);
-            
-            if(y <= canvas.getHeight()-60-horseRadius) {
-                hasEntered = true;
-            } else {
-                hasEntered = false;
-            }
-            
-            if(collides()) {
-                handleCollision();
-            }
-            
-            if(collidesFence()) {
-                handleCollisionWithFence();
-            } else {
-                isPenaltyReduced = false;
-            }
-            
-            if(checkCircleBarrel(barrel1)) {
-                barrel1Circled = true;
-                barrel1.setmPaint(mPaint);
-            }
-            
-            if(checkCircleBarrel(barrel2)) {
-                barrel2Circled = true;
-                barrel2.setmPaint(mPaint);
-            }
-            
-            if(checkCircleBarrel(barrel3)) {
-                barrel3Circled = true;
-                barrel3.setmPaint(mPaint);
-            }
-            
-            if(barrel1Circled &&  
-                    barrel2Circled && barrel3Circled) {
-                isThreadRunning = false;
-                t.interrupt();
-                if(!isGameFinished) {
-                    Intent toSuccessActivity = new Intent(context, SuccessActivity.class);
-                    toSuccessActivity.putExtra("timeElapsed", SystemClock.uptimeMillis()-startTime);
-                    context.startActivity(toSuccessActivity);
-                    ((Activity) context).finish();
-                    isGameFinished = true;
+            if(holder.getSurface().isValid()) {
+                canvas = holder.lockCanvas();
+                canvas.drawColor(context.getResources().getColor(R.color.bg_color));
+                
+                fence1.draw(canvas);
+                fence2.draw(canvas);
+                fence3.draw(canvas);
+                fence4.draw(canvas);
+                fence5.draw(canvas);
+                
+                barrel1.draw(canvas);
+                barrel2.draw(canvas);
+                barrel3.draw(canvas);
+                
+                x += accelX;
+                y += accelY;
+                
+                if(y > height-50) {
+                    y = height-50;
                 }
+                
+                horse.draw(x, y, 20, canvas);
+                
+                if(y <= canvas.getHeight()-60-horseRadius) {
+                    hasEntered = true;
+                } else {
+                    hasEntered = false;
+                }
+                
+                if(collides()) {
+                    handleCollision();
+                }
+                
+                if(collidesFence()) {
+                    handleCollisionWithFence();
+                } else {
+                    isPenaltyReduced = false;
+                }
+                
+                if(checkCircleBarrel(barrel1)) {
+                    barrel1Circled = true;
+                    barrel1.setmPaint(mPaint);
+                }
+                
+                if(checkCircleBarrel(barrel2)) {
+                    barrel2Circled = true;
+                    barrel2.setmPaint(mPaint);
+                }
+                
+                if(checkCircleBarrel(barrel3)) {
+                    barrel3Circled = true;
+                    barrel3.setmPaint(mPaint);
+                }
+                
+                if(barrel1Circled &&  
+                        barrel2Circled && barrel3Circled) {
+                    isThreadRunning = false;
+                    t.interrupt();
+                    if(!isGameFinished) {
+                        Intent toSuccessActivity = new Intent(context, SuccessActivity.class);
+                        toSuccessActivity.putExtra("timeElapsed", SystemClock.uptimeMillis()-startTime);
+                        context.startActivity(toSuccessActivity);
+                        ((Activity) context).finish();
+                        isGameFinished = true;
+                    }
+                }
+                
+                holder.unlockCanvasAndPost(canvas);
             }
-            
-            holder.unlockCanvasAndPost(canvas);
         }
     }
     
@@ -303,7 +297,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         }  
         
         if(y >= canvas.getHeight()-80-horseRadius) {
-            if(x >= (canvas.getWidth()/2)-25-horseRadius && x <= ((canvas.getWidth()/2)+25+horseRadius)) {
+            if(x >= (canvas.getWidth()/2)-horseRadius && x <= ((canvas.getWidth()/2)+horseRadius)) {
                 collidesFence = false;
             } else {
                 if(hasEntered) {
@@ -395,16 +389,6 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        // TODO Auto-generated method stub
-        
-        x = event.getX();
-        y = event.getY();
-       
-        return true;
-    }
-
-    @Override
     public void surfaceCreated(SurfaceHolder holder) {
         // TODO Auto-generated method stub
         
@@ -424,7 +408,6 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     }
 
     private Runnable updateTimer = new Runnable() {
-
         @Override
         public void run() {
             // TODO Auto-generated method stub

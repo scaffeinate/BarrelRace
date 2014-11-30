@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.app.ui.assignment.barrelrace.views.BarrelRaceView;
 
-public class GameActivity extends Activity {
+public class GameActivity extends Activity implements OnClickListener {
 
     private BarrelRaceView barrelRaceView;
     private TextView textViewTime;
+    private Button buttonStart;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +25,12 @@ public class GameActivity extends Activity {
         Point point = new Point();
         display.getSize(point);
         setContentView(R.layout.activity_game);
-        /*barrelRaceView = new BarrelRaceView(this, point.x, point.y);*/
         barrelRaceView = (BarrelRaceView) findViewById(R.id.barrelRaceView);
         textViewTime = (TextView) findViewById(R.id.textViewTime);
+        buttonStart = (Button) findViewById(R.id.buttonStart);
         barrelRaceView.initialize(this, point.x, point.y, textViewTime);
+    
+        buttonStart.setOnClickListener(this);
     }
 
     @Override
@@ -39,6 +45,16 @@ public class GameActivity extends Activity {
         // TODO Auto-generated method stub
         super.onPause();
         barrelRaceView.pause();
+    }
+
+    @Override
+    public void onClick(View v) {
+        // TODO Auto-generated method stub
+        switch(v.getId()) {
+        case R.id.buttonStart:
+            barrelRaceView.startTimer();
+            break;
+        }
     }
     
 }
