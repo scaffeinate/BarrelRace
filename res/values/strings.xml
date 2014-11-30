@@ -22,5 +22,6 @@
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="save_changes">Save Changes</string>
+    <string name="enter_name">Enter Name</string>
 
 </resources>
