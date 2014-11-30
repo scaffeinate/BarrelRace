@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -24,8 +28,10 @@ import com.app.ui.assignment.barrelrace.objects.Barrel;
 import com.app.ui.assignment.barrelrace.objects.Fence;
 import com.app.ui.assignment.barrelrace.objects.Horse;
 
-public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchListener, Callback {
+public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchListener, SensorEventListener, Callback {
 
+    private SensorManager sensorManager;
+    
     Thread t = null;
     SurfaceHolder holder;
     boolean isThreadRunning = true;
@@ -36,6 +42,8 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     private Barrel barrel1, barrel2, barrel3;
     
     private float x,y;
+    private float height, width;
+    private float accelX, accelY;
     private float barrel1X, barrel1Y, barrel2X, barrel2Y, barrel3X, barrel3Y;
     private float fence1StartX, fence1StartY, fence1StopX, fence1StopY;
     private float fence2StartX, fence2StartY, fence2StopX, fence2StopY;
@@ -63,8 +71,12 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
 
     public void initialize(Context context, int width, int height, TextView textViewTime) {
         this.context = context;
+        this.height = height;
+        this.width = width;
         holder = getHolder();
-        initalizeCoordinates(width, height);
+        sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+        initalizeCoordinates();
         initializeObjects();
         initializeMedia();
         initializeTimer();
@@ -86,7 +98,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         fMedia = MediaPlayer.create(context, R.raw.fence_hit);
     }
 
-    private void initalizeCoordinates(float width, float height) {
+    private void initalizeCoordinates() {
         // TODO Auto-generated method stub
         x = width/2;
         y = height-50;
@@ -166,6 +178,9 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
             barrel2.draw(canvas);
             barrel3.draw(canvas);
             
+            x += accelX;
+            y += accelY;
+            
             horse.draw(x, y, 20, canvas);
             
             if(y <= canvas.getHeight()-60-horseRadius) {
@@ -205,6 +220,9 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         // TODO Auto-generated method stub
         if(!isPenaltyReduced) {
             fMedia.start();
+            /*if(vibrator.hasVibrator()) {
+                vibrator.vibrate(100);
+            }*/
             synchronized (TIMER_LOCK) {
                 startTime -= 5000;
             }
@@ -241,28 +259,33 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     private boolean collidesFence() {
         // TODO Auto-generated method stub
         
-        if(x <= (horseRadius+30)) {
-            x += 1f;
-        } else if(x >= (canvas.getWidth()-30-horseRadius)) {
-            x -= 1f;
-        } else if(y <= (horseRadius+30)) {
-            y += 1f;
-        } else if(y >= canvas.getHeight()-80-horseRadius) {
+        if(x <= (horseRadius+35)) {
+            x = 30+horseRadius;
+        }  
+        
+        if(x >= (canvas.getWidth()-35-horseRadius)) {
+            x = canvas.getWidth()-30-horseRadius;
+        } 
+        
+        if(y <= (horseRadius+35)) {
+            y = 30+horseRadius;
+        }  
+        
+        if(y >= canvas.getHeight()-80-horseRadius) {
             if(x >= (canvas.getWidth()/2)-50-horseRadius && x <= ((canvas.getWidth()/2)+50+horseRadius)) {
                 return false;
             } else {
                 if(hasEntered) {
                     y -= 1f;
+                    
                 } else {
                     y = canvas.getHeight()-50;
                     return false;
                 }
             }
-        } else {
-            return false;
-        }
+        } 
         
-        return true;
+        return false;
     }
 
     private void handleCollision() {
@@ -388,5 +411,28 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         }
         
     };
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        // TODO Auto-generated method stub
+        /*x = event.values[0]*350;
+        y = event.values[1]*150;*/
+        /*x = (float) (Math.signum(event.values[0]) * Math.abs(event.values[0]) * (1 - 0.5 * Math.abs(event.values[2]) / 9.8));
+        y = (float) (Math.signum(event.values[1]) * Math.abs(event.values[1]) * (1 - 0.5 * Math.abs(event.values[2]) / 9.8));
+    
+        x = x*250;
+        y=y*250;*/
+        
+        accelX = (float) (event.values[1] * 1.2);
+        accelY = (float) (event.values[0] * 1.5);
+        
+    
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // TODO Auto-generated method stub
+        
+    }
     
 }
