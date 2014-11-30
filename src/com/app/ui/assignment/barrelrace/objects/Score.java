@@ -32,8 +32,8 @@ public class Score {
     public static Comparator<Score> scoreComparator =
             new Comparator<Score>() {
         public int compare(Score s1 , Score s2) {
-            long l1 = ((Score)s1).getScoreTime();
-            long l2 = ((Score)s2).getScoreTime();
+            long l1 = s1.getScoreTime();
+            long l2 = s2.getScoreTime();
             return (int) (l2-l1);
         }
     };

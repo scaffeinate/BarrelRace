@@ -1,5 +1,8 @@
 package com.app.ui.assignment.barrelrace;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,11 +10,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.app.ui.assignment.barrelrace.objects.Score;
+import com.app.ui.assignment.barrelrace.util.FileUtil;
+
 public class SuccessActivity extends Activity implements OnClickListener {
 
     private Button buttonHome;
     private TextView textViewTime;
     private Long timeElapsed = 0L;
+    
+    private FileUtil fileUtil;
+    private ArrayList<Score> scoresList;
+    private StringBuilder strBuilder;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +32,10 @@ public class SuccessActivity extends Activity implements OnClickListener {
         buttonHome = (Button) findViewById(R.id.buttonHome);
         textViewTime = (TextView) findViewById(R.id.textViewTime);
         buttonHome.setOnClickListener(this);
+        
+        fileUtil = new FileUtil();
+        scoresList = new ArrayList<Score>();
+        strBuilder = new StringBuilder();
         
         try {
             timeElapsed = getIntent().getLongExtra("timeElapsed", 0L);
@@ -36,6 +50,21 @@ public class SuccessActivity extends Activity implements OnClickListener {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    
+        scoresList = fileUtil.fetchHighScores();
+        
+        scoresList.add(new Score("Test", timeElapsed));
+        
+        Collections.sort(scoresList, Score.scoreComparator);
+        
+        for(int i=0;i<10;i++) {
+            strBuilder.append(scoresList.get(i).getName());
+            strBuilder.append(":");
+            strBuilder.append(scoresList.get(i).getScoreTime());
+            strBuilder.append(System.lineSeparator());
+        }
+        
+        fileUtil.writeToFile(strBuilder.toString());
     }
 
     @Override
