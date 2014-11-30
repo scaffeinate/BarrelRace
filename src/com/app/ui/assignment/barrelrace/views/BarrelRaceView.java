@@ -224,9 +224,9 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         // TODO Auto-generated method stub
         if(!isPenaltyReduced) {
             fMedia.start();
-            /*if(vibrator.hasVibrator()) {
+            if(vibrator.hasVibrator()) {
                 vibrator.vibrate(100);
-            }*/
+            }
             synchronized (TIMER_LOCK) {
                 startTime -= 5000;
             }
@@ -263,33 +263,38 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     private boolean collidesFence() {
         // TODO Auto-generated method stub
         
-        if(x <= (horseRadius+35)) {
+        boolean collidesFence = false;
+        
+        if(x <= (horseRadius+30)) {
             x = 30+horseRadius;
+            collidesFence = true;
         }  
         
-        if(x >= (canvas.getWidth()-35-horseRadius)) {
+        if(x >= (canvas.getWidth()-30-horseRadius)) {
             x = canvas.getWidth()-30-horseRadius;
+            collidesFence = true;
         } 
         
-        if(y <= (horseRadius+35)) {
+        if(y <= (horseRadius+30)) {
             y = 30+horseRadius;
+            collidesFence = true;
         }  
         
         if(y >= canvas.getHeight()-80-horseRadius) {
-            if(x >= (canvas.getWidth()/2)-50-horseRadius && x <= ((canvas.getWidth()/2)+50+horseRadius)) {
-                return false;
+            if(x >= (canvas.getWidth()/2)-25-horseRadius && x <= ((canvas.getWidth()/2)+25+horseRadius)) {
+                collidesFence = false;
             } else {
                 if(hasEntered) {
-                    y -= 1f;
-                    
+                    y = canvas.getHeight()-80-horseRadius;
+                    collidesFence = true;
                 } else {
                     y = canvas.getHeight()-50;
-                    return false;
+                    collidesFence = false;
                 }
             }
         } 
         
-        return false;
+        return collidesFence;
     }
 
     private void handleCollision() {
