@@ -18,7 +18,6 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.app.ui.assignment.barrelrace.FailureActivity;
@@ -54,6 +53,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
     private boolean hasEntered = false;
     private boolean isGameFinished = false;
     private boolean isPenaltyReduced = false;
+    private boolean isTimerStarted = false;
     private boolean barrel1Circled, barrel2Circled, barrel3Circled;
     private Paint mPaint;
     private Object TIMER_LOCK = new Object();
@@ -89,6 +89,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
         startTime = SystemClock.uptimeMillis();
         handler = new Handler();
         handler.postDelayed(updateTimer, 0);
+        isTimerStarted = true;
     }
 
     private void initializeMedia() {
@@ -429,8 +430,10 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
     @Override
     public void onSensorChanged(SensorEvent event) {
         // TODO Auto-generated method stub
-        accelX = (float) (event.values[1] * 1.40);
-        accelY = (float) (event.values[0] * 1.70);
+        if(isTimerStarted) {
+            accelX = (float) (event.values[1] * 1.40);
+            accelY = (float) (event.values[0] * 1.70);
+        }
     }
 
     @Override
