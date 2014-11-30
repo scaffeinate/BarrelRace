@@ -44,12 +44,15 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
     private float height, width;
     private float accelX, accelY;
     private float barrel1X, barrel1Y, barrel2X, barrel2Y, barrel3X, barrel3Y;
+    private float gateGap;
+    private float leftMargin, rightMargin, topMargin, bottomMargin;
     private float fence1StartX, fence1StartY, fence1StopX, fence1StopY;
     private float fence2StartX, fence2StartY, fence2StopX, fence2StopY;
     private float fence3StartX, fence3StartY, fence3StopX, fence3StopY;
     private float fence4StartX, fence4StartY, fence4StopX, fence4StopY;
     private float fence5StartX, fence5StartY, fence5StopX, fence5StopY;
     private float horseRadius, barrelRadius;
+    private float[] horseStartPosition;
     private boolean hasEntered = false;
     private boolean isGameFinished = false;
     private boolean isPenaltyReduced = false;
@@ -101,44 +104,54 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
 
     private void initalizeCoordinates() {
         // TODO Auto-generated method stub
-        x = width/2;
-        y = height-50;
+        
+        horseStartPosition = new float[] { width/2, height-50 };
+        
+        x = horseStartPosition[0];
+        y = horseStartPosition[1];
+        
         horseRadius = 25;
         barrelRadius = 25; 
+        
+        gateGap = (float) (horseRadius * 2.5);
+        
+        leftMargin = rightMargin = 100;
+        topMargin = 30;
+        bottomMargin = 80;
         
         barrel1X = (width/2);
         barrel1Y = height-225;
         
-        barrel2X = (width/2)+250;
-        barrel2Y = 125;
+        barrel2X = (width/2)+215;
+        barrel2Y = 150;
         
-        barrel3X = (width/2)-250;
-        barrel3Y = 125;
+        barrel3X = (width/2)-215;
+        barrel3Y = 150;
         
-        fence1StartX = 100;
-        fence1StartY = 30;
-        fence1StopX = width-100;
-        fence1StopY = 30;
+        fence1StartX = leftMargin;
+        fence1StartY = topMargin;
+        fence1StopX = width-rightMargin;
+        fence1StopY = topMargin;
         
-        fence2StartX = 100;
-        fence2StartY = 30;
-        fence2StopX = 100;
-        fence2StopY = height-80;
+        fence2StartX = leftMargin;
+        fence2StartY = topMargin;
+        fence2StopX = leftMargin;
+        fence2StopY = height-bottomMargin;
         
-        fence3StartX = width-100;
-        fence3StartY = 30;
-        fence3StopX = width-100;
-        fence3StopY = height-80;
+        fence3StartX = width-rightMargin;
+        fence3StartY = topMargin;
+        fence3StopX = width-rightMargin;
+        fence3StopY = height-bottomMargin;
         
-        fence4StartX = 100;
-        fence4StartY = height-80;
-        fence4StopX = (width/2)-50;
-        fence4StopY = height-80;
+        fence4StartX = leftMargin;
+        fence4StartY = height-bottomMargin;
+        fence4StopX = (width/2)-gateGap/2;
+        fence4StopY = height-bottomMargin;
         
-        fence5StartX = width-100;
-        fence5StartY = height-80;
-        fence5StopX = (width/2)+50;
-        fence5StopY = height-80;
+        fence5StartX = width-rightMargin;
+        fence5StartY = height-bottomMargin;
+        fence5StopX = (width/2)+gateGap/2;
+        fence5StopY = height-bottomMargin;
         
     }
 
@@ -182,13 +195,13 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
                 x += accelX;
                 y += accelY;
                 
-                if(y > height-50) {
-                    y = height-50;
+                if(y > horseStartPosition[1]) {
+                    y = horseStartPosition[1];
                 }
                 
-                horse.draw(x, y, 20, canvas);
+                horse.draw(x, y, horseRadius-5, canvas);
                 
-                if(y <= canvas.getHeight()-60-horseRadius) {
+                if(y <= height-bottomMargin+20-horseRadius) {
                     hasEntered = true;
                 } else {
                     hasEntered = false;
@@ -298,14 +311,14 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
         }  
         
         if(y >= fence4StartY-horseRadius) {
-            if(x >= fence4StopX && x <= fence5StopX) {
+            if(x >= fence4StopX+10 && x <= fence5StopX-10) {
                 collidesFence = false;
             } else {
                 if(hasEntered) {
                     y = fence4StartY-horseRadius;
                     collidesFence = true;
                 } else {
-                    y = height-50;
+                    y = horseStartPosition[1];
                     collidesFence = false;
                 }
             }
