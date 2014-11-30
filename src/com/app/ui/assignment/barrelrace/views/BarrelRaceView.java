@@ -103,11 +103,11 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
         gameDifficulty = sharedPreferences.getString("difficulty", "normal");
         
         if(gameDifficulty.equals("easy")) {
-            accelRate = 1.35F;
+            accelRate = 1.45F;
         } else if(gameDifficulty.equals("hard")) {
-            accelRate = 1.80F;
+            accelRate = 2.80F;
         } else {
-            accelRate = 1.50F;
+            accelRate = 1.70F;
         }
     }
 

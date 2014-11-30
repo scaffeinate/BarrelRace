@@ -33,6 +33,22 @@ public class SettingsActivity extends Activity implements OnClickListener {
         buttonSave = (Button) findViewById(R.id.buttonSave);
         
         buttonSave.setOnClickListener(this);
+        
+        String difficulty = sharedPreferences.getString("difficulty", "normal");
+        
+        if(difficulty.equals("easy")) {
+            radioDiffButton = (RadioButton) findViewById(R.id.radioButtonEasy);
+            radioDiffButton.setChecked(true);
+        } else if(difficulty.equals("hard")) {
+            radioDiffButton = (RadioButton) findViewById(R.id.radioButtonHard);
+            radioDiffButton.setChecked(true);
+        }
+        
+        boolean sound = sharedPreferences.getBoolean("sound", true);
+        if(!sound) {
+            radioSoundButton = (RadioButton) findViewById(R.id.radioButtonSoundOff);
+            radioSoundButton.setChecked(true);
+        }
     }
 
     @Override
@@ -52,6 +68,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
             }
             
             sharedEditor.commit();
+            finish();
             break;
         }
     }
