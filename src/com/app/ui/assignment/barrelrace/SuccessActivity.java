@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.app.ui.assignment.barrelrace.objects.Score;
 import com.app.ui.assignment.barrelrace.util.FileUtil;
+import com.app.ui.assignment.barrelrace.util.ScoreComparator;
+import com.app.ui.assignment.barrelrace.util.TimerUtil;
 
 public class SuccessActivity extends Activity implements OnClickListener {
 
@@ -39,13 +41,7 @@ public class SuccessActivity extends Activity implements OnClickListener {
         
         try {
             timeElapsed = getIntent().getLongExtra("timeElapsed", 0L);
-            int timeDiff = (int) (timeElapsed/1000);
-            int minutes = timeDiff/60;
-            int seconds = timeDiff % 60;
-            int milliseconds = (int) (timeElapsed % 1000);
-   
-            textViewTime.setText(minutes + ":" + String.format("%02d", seconds) 
-                    + ":" + String.format("%03d", milliseconds));
+            textViewTime.setText(new TimerUtil().formatTime(timeElapsed));
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -55,9 +51,15 @@ public class SuccessActivity extends Activity implements OnClickListener {
         
         scoresList.add(new Score("Test", timeElapsed));
         
-        Collections.sort(scoresList, Score.scoreComparator);
+        Collections.sort(scoresList, new ScoreComparator());
         
-        for(int i=0;i<10;i++) {
+        int size = 10;
+        
+        if(scoresList.size() < 10) {
+            size = scoresList.size();
+        }
+        
+        for(int i=0;i<size;i++) {
             strBuilder.append(scoresList.get(i).getName());
             strBuilder.append(":");
             strBuilder.append(scoresList.get(i).getScoreTime());

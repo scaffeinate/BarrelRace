@@ -19,11 +19,13 @@ public class CustomAdapter extends BaseAdapter {
 
     private ArrayList<Score> scoresList;
     private LayoutInflater inflater;
+    private TimerUtil timerUtil;
     
     public CustomAdapter(Activity activity, ArrayList<Score> scoresList) {
         this.scoresList = scoresList;
         inflater = (LayoutInflater) activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        timerUtil = new TimerUtil();
     }
     
     @Override
@@ -69,7 +71,7 @@ public class CustomAdapter extends BaseAdapter {
         
         /*Set Values to Views*/
         holder.textViewName.setText(scoresList.get(position).getName());
-        holder.textViewScore.setText(String.valueOf(scoresList.get(position).getScoreTime()));
+        holder.textViewScore.setText(timerUtil.formatTime(scoresList.get(position).getScoreTime()));
         
         return vi;
     }

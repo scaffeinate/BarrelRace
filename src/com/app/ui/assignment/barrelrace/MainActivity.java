@@ -33,6 +33,8 @@ public class MainActivity extends Activity implements OnClickListener {
             startActivity(toGameActivity);
             break;
         case R.id.buttonScores:
+            Intent toViewScores = new Intent(this, ViewScoresActivity.class);
+            startActivity(toViewScores);
             break;
         case R.id.buttonSettings:
             break;

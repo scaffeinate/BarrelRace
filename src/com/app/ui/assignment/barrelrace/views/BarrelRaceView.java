@@ -26,6 +26,7 @@ import com.app.ui.assignment.barrelrace.SuccessActivity;
 import com.app.ui.assignment.barrelrace.objects.Barrel;
 import com.app.ui.assignment.barrelrace.objects.Fence;
 import com.app.ui.assignment.barrelrace.objects.Horse;
+import com.app.ui.assignment.barrelrace.util.TimerUtil;
 
 public class BarrelRaceView extends SurfaceView implements Runnable, SensorEventListener, Callback {
 
@@ -67,6 +68,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
     private MediaPlayer bMedia, fMedia;
     private TextView textViewTime;
     private Handler handler;
+    private TimerUtil timerUtil;
     
     public BarrelRaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -91,6 +93,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
         // TODO Auto-generated method stub
         startTime = SystemClock.uptimeMillis();
         handler = new Handler();
+        timerUtil = new TimerUtil();
         handler.postDelayed(updateTimer, 0);
         isTimerStarted = true;
     }
@@ -427,13 +430,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
             // TODO Auto-generated method stub
             timeDiffMil = (SystemClock.uptimeMillis() - startTime);
             
-            int timeDiff = (int) (timeDiffMil/1000);
-            int minutes = timeDiff/60;
-            int seconds = timeDiff % 60;
-            int milliseconds = (int) (timeDiffMil % 1000);
-        
-            textViewTime.setText(minutes + ":" + String.format("%02d", seconds) 
-                    + ":" + String.format("%03d", milliseconds));
+            textViewTime.setText(timerUtil.formatTime(timeDiffMil));
         
             handler.postDelayed(this, 0);
         }
