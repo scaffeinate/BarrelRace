@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -54,6 +56,8 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     private boolean hasEntered = false;
     private boolean isGameFinished = false;
     private boolean isPenaltyReduced = false;
+    private boolean barrel1Circled, barrel2Circled, barrel3Circled;
+    private Paint mPaint;
     private Object TIMER_LOCK = new Object();
     
     private long startTime = 0L, timeDiffMil = 0L;
@@ -155,6 +159,9 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
         barrel1 = new Barrel(context, barrel1X, barrel1Y, barrelRadius);
         barrel2 = new Barrel(context, barrel2X, barrel2Y, barrelRadius);
         barrel3 = new Barrel(context, barrel3X, barrel3Y, barrelRadius);
+        
+        mPaint = new Paint();
+        mPaint.setColor(Color.GREEN);
     }
     
     @Override
@@ -203,8 +210,23 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
                 isPenaltyReduced = false;
             }
             
-            if(checkCircleBarrel(barrel1) && checkCircleBarrel(barrel2) 
-                    && checkCircleBarrel(barrel3)) {
+            if(checkCircleBarrel(barrel1)) {
+                barrel1Circled = true;
+                barrel1.setmPaint(mPaint);
+            }
+            
+            if(checkCircleBarrel(barrel2)) {
+                barrel2Circled = true;
+                barrel2.setmPaint(mPaint);
+            }
+            
+            if(checkCircleBarrel(barrel3)) {
+                barrel3Circled = true;
+                barrel3.setmPaint(mPaint);
+            }
+            
+            if(barrel1Circled &&  
+                    barrel2Circled && barrel3Circled) {
                 isThreadRunning = false;
                 t.interrupt();
                 if(!isGameFinished) {
@@ -424,18 +446,8 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
     @Override
     public void onSensorChanged(SensorEvent event) {
         // TODO Auto-generated method stub
-        /*x = event.values[0]*350;
-        y = event.values[1]*150;*/
-        /*x = (float) (Math.signum(event.values[0]) * Math.abs(event.values[0]) * (1 - 0.5 * Math.abs(event.values[2]) / 9.8));
-        y = (float) (Math.signum(event.values[1]) * Math.abs(event.values[1]) * (1 - 0.5 * Math.abs(event.values[2]) / 9.8));
-    
-        x = x*250;
-        y=y*250;*/
-        
-        accelX = (float) (event.values[1] * 1.2);
-        accelY = (float) (event.values[0] * 1.5);
-        
-    
+        accelX = (float) (event.values[1] * 1.40);
+        accelY = (float) (event.values[0] * 1.70);
     }
 
     @Override
