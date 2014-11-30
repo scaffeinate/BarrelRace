@@ -3,6 +3,7 @@ package com.app.ui.assignment.barrelrace.views;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -54,11 +55,14 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
     private float fence5StartX, fence5StartY, fence5StopX, fence5StopY;
     private float horseRadius, barrelRadius;
     private float[] horseStartPosition;
+    private float accelRate;
     private boolean hasEntered = false;
     private boolean isGameFinished = false;
     private boolean isPenaltyReduced = false;
     private boolean isTimerStarted = false;
     private boolean barrel1Circled, barrel2Circled, barrel3Circled;
+    private boolean isSoundEnabled = false;
+    private String gameDifficulty;
     private Paint mPaint;
     private Object TIMER_LOCK = new Object();
     
@@ -69,6 +73,8 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
     private TextView textViewTime;
     private Handler handler;
     private TimerUtil timerUtil;
+    
+    private SharedPreferences sharedPreferences;
     
     public BarrelRaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -86,7 +92,23 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
         initalizeCoordinates();
         initializeObjects();
         initializeMedia();
+        initializeGamePrefs();
         this.textViewTime = textViewTime;
+    }
+
+    private void initializeGamePrefs() {
+        // TODO Auto-generated method stub
+        sharedPreferences = context.getSharedPreferences("GAME_PREFS", Context.MODE_PRIVATE);
+        isSoundEnabled = sharedPreferences.getBoolean("sound", true);
+        gameDifficulty = sharedPreferences.getString("difficulty", "normal");
+        
+        if(gameDifficulty.equals("easy")) {
+            accelRate = 1.35F;
+        } else if(gameDifficulty.equals("hard")) {
+            accelRate = 1.80F;
+        } else {
+            accelRate = 1.50F;
+        }
     }
 
     public void startTimer() {
@@ -256,7 +278,9 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
     private void handleCollisionWithFence() {
         // TODO Auto-generated method stub
         if(!isPenaltyReduced) {
-            fMedia.start();
+            if(isSoundEnabled) {
+                fMedia.start();
+            }
             if(vibrator.hasVibrator()) {
                 vibrator.vibrate(100);
             }
@@ -337,7 +361,9 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
         t.interrupt();
         
         if(!isGameFinished) {
-            bMedia.start();
+            if(isSoundEnabled) {
+                bMedia.start();
+            }
             if(vibrator.hasVibrator()) {
                 vibrator.vibrate(100);
             }
@@ -441,8 +467,8 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
     public void onSensorChanged(SensorEvent event) {
         // TODO Auto-generated method stub
         if(isTimerStarted) {
-            accelX = (float) (event.values[1] * 1.40);
-            accelY = (float) (event.values[0] * 1.70);
+            accelX = (float) (event.values[1] * accelRate);
+            accelY = (float) (event.values[0] * accelRate);
         }
     }
 

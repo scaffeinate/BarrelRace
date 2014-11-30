@@ -33,10 +33,12 @@ public class MainActivity extends Activity implements OnClickListener {
             startActivity(toGameActivity);
             break;
         case R.id.buttonScores:
-            Intent toViewScores = new Intent(this, ViewScoresActivity.class);
-            startActivity(toViewScores);
+            Intent toViewScoresActivity = new Intent(this, ViewScoresActivity.class);
+            startActivity(toViewScoresActivity);
             break;
         case R.id.buttonSettings:
+            Intent toSettingsActivity = new Intent(this, SettingsActivity.class);
+            startActivity(toSettingsActivity);
             break;
         }
     }
