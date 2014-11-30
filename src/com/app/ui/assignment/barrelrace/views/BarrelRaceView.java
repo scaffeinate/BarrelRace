@@ -181,6 +181,10 @@ public class BarrelRaceView extends SurfaceView implements Runnable, OnTouchList
             x += accelX;
             y += accelY;
             
+            if(y > height-50) {
+                y = height-50;
+            }
+            
             horse.draw(x, y, 20, canvas);
             
             if(y <= canvas.getHeight()-60-horseRadius) {
