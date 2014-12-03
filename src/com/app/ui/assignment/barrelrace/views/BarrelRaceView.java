@@ -90,6 +90,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
     private boolean isTimerStarted = false;
     private boolean barrel1Circled, barrel2Circled, barrel3Circled;
     private boolean isSoundEnabled = false;
+    private boolean isInterrupted = false;
     /*Game Difficulty from SharedPreferences*/
     private String gameDifficulty;
     private Paint mPaint;
@@ -98,7 +99,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
     private Object TIMER_LOCK = new Object();
     
     /*Timer values*/
-    private long startTime = 0L, timeDiffMil = 0L;
+    private long startTime = 0L, timeDiffMil = 0L, tempTime = 0L;
     
     /*Initialize objects*/
     private Vibrator vibrator;
@@ -336,7 +337,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
                     if(!isGameFinished) {
                         /*Start SuccessActivity, send elapsed time with Intent*/
                         Intent toSuccessActivity = new Intent(context, SuccessActivity.class);
-                        toSuccessActivity.putExtra("timeElapsed", SystemClock.uptimeMillis()-startTime);
+                        toSuccessActivity.putExtra("timeElapsed", timeDiffMil);
                         context.startActivity(toSuccessActivity);
                         ((Activity) context).finish();
                         //Set GameFinished to true
@@ -530,7 +531,9 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
     
     /*Pause the Game Thread on Game Activity pause*/
     public void pause() {
+        tempTime += SystemClock.uptimeMillis()-startTime;
         isThreadRunning = false;
+        isInterrupted = true;
         while(true) {
             try {
                 t.join();
@@ -545,6 +548,13 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
     
     /*Resume Game Thread on Game Activity Resume*/
     public void resume() {
+        if(isInterrupted) {
+            startTime = SystemClock.uptimeMillis();
+            handler = new Handler(); //Handler to update TextView
+            timerUtil = new TimerUtil();
+            handler.postDelayed(updateTimer, 0); //Start Handler to update timer textview
+            isInterrupted = false;
+        }
         isThreadRunning = true;
         t = new Thread(this);
         t.start();
@@ -574,12 +584,14 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
         @Override
         public void run() {
             // TODO Auto-generated method stub
-            timeDiffMil = (SystemClock.uptimeMillis() - startTime);
-            
-            /*Format time and set it to textview*/
-            textViewTime.setText(timerUtil.formatTime(timeDiffMil));
-            
-            handler.postDelayed(this, 0);
+            if(isThreadRunning) {
+                timeDiffMil = (SystemClock.uptimeMillis() - startTime) + tempTime;
+                
+                /*Format time and set it to textview*/
+                textViewTime.setText(timerUtil.formatTime(timeDiffMil));
+                
+                handler.postDelayed(this, 0);
+            }
         }
         
     };
