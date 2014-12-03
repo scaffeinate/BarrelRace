@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="bg_color">#FFD180</color>
+    <color name="bg_color">#FFECB3</color>
+    <color name="text_color">#795548</color>
     <color name="fence_color">#795548</color>
     <color name="barrel_color">#795548</color>
+    <color name="button_bg_color">#795548</color>
+    <color name="button_bg_color_pressed">#4E342E</color>
 
 </resources>
