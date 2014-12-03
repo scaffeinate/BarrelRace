@@ -145,7 +145,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
         bottomMargin = height/7;
         
         barrel1X = (width/2);
-        barrel1Y = (float) (height-height/3.5);
+        barrel1Y = (float) (height-height/2.75);
         
         barrel2X = (3*width)/4-rightMargin/2;
         barrel2Y = height/4;
@@ -468,7 +468,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
         // TODO Auto-generated method stub
         if(isTimerStarted) {
             accelX = (float) (event.values[1] * accelRate);
-            accelY = (float) (event.values[0] * accelRate);
+            accelY = (float) (event.values[0] * (accelRate * 1.5));
         }
     }
 
