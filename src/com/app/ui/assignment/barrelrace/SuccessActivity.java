@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,8 @@ public class SuccessActivity extends Activity implements OnClickListener {
 
     private Button buttonHome;
     private TextView textViewTime;
+    private TextView textViewTitle;
+    private Typeface titleFont;
     private EditText editTextName;
     private Long timeElapsed = 0L;
     
@@ -45,6 +48,7 @@ public class SuccessActivity extends Activity implements OnClickListener {
         setContentView(R.layout.activity_success);
         
         buttonHome = (Button) findViewById(R.id.buttonHome);
+        textViewTitle = (TextView) findViewById(R.id.textViewTitle);
         textViewTime = (TextView) findViewById(R.id.textViewTime);
         editTextName = (EditText) findViewById(R.id.editTextName);
         buttonHome.setOnClickListener(this);
@@ -53,6 +57,10 @@ public class SuccessActivity extends Activity implements OnClickListener {
         fileUtil = new FileUtil();
         scoresList = new ArrayList<Score>();
         strBuilder = new StringBuilder();
+        
+        /*Set Custom Typeface to the title*/
+        titleFont = Typeface.createFromAsset(getAssets(), "fonts/title_font.ttf");
+        textViewTitle.setTypeface(titleFont);
         
         /*Show the formatted timeElapsed value in textview*/ 
         try {

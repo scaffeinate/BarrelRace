@@ -2,10 +2,12 @@ package com.app.ui.assignment.barrelrace;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
 * @author Vasu Irneni
@@ -20,6 +22,8 @@ import android.widget.Button;
 public class FailureActivity extends Activity implements OnClickListener {
 
     private Button buttonTryAgain, buttonHome;
+    private TextView textViewTitle;
+    private Typeface titleFont;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +31,14 @@ public class FailureActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_failure);
         
+        textViewTitle = (TextView) findViewById(R.id.textViewTitle);
         buttonTryAgain = (Button) findViewById(R.id.buttonTryAgain);
         buttonHome = (Button) findViewById(R.id.buttonHome);
     
+        /*Set Custom Typeface to the title*/
+        titleFont = Typeface.createFromAsset(getAssets(), "fonts/title_font.ttf");
+        textViewTitle.setTypeface(titleFont);
+        
         buttonTryAgain.setOnClickListener(this);
         buttonHome.setOnClickListener(this);
     }
