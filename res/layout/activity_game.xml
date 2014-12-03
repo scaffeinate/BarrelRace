@@ -17,8 +17,10 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:text="@string/start_time"
-        android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:textColor="@color/text_color"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:typeface="serif" />
 
     <Button
         android:id="@+id/buttonStart"

@@ -3,17 +3,22 @@ package com.app.ui.assignment.barrelrace;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class SettingsActivity extends Activity implements OnClickListener {
 
     private RadioGroup radioGroupDiff, radioGroupSound;
     private RadioButton radioDiffButton, radioSoundButton;
+    private TextView textViewTitle;
+    private Typeface titleFont;
     private Button buttonSave;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor sharedEditor;
@@ -27,10 +32,14 @@ public class SettingsActivity extends Activity implements OnClickListener {
         sharedPreferences = getSharedPreferences("GAME_PREFS", Context.MODE_PRIVATE);
         sharedEditor = sharedPreferences.edit();
         
+        textViewTitle = (TextView) findViewById(R.id.textViewTitle);
         radioGroupDiff = (RadioGroup) findViewById(R.id.radioGroupDiff);
         radioGroupSound = (RadioGroup) findViewById(R.id.radioGroupSound);
         
         buttonSave = (Button) findViewById(R.id.buttonSave);
+        
+        titleFont = Typeface.createFromAsset(getAssets(), "fonts/title_font.ttf");
+        textViewTitle.setTypeface(titleFont);
         
         buttonSave.setOnClickListener(this);
         
@@ -68,6 +77,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
             }
             
             sharedEditor.commit();
+            Toast.makeText(getApplicationContext(), "Successfully saved your preferences", Toast.LENGTH_SHORT).show();
             finish();
             break;
         }

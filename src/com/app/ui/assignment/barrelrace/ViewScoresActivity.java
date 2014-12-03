@@ -3,6 +3,7 @@ package com.app.ui.assignment.barrelrace;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,8 @@ public class ViewScoresActivity extends Activity {
     private ListView listViewScores;
     private ProgressBar progressBar;
     private TextView textViewNoScores;
+    private TextView textViewTitle;
+    private Typeface titleFont;
     private ArrayList<Score> scoresList;
     private CustomAdapter adapter;
     private FileUtil fileUtil;
@@ -30,9 +33,13 @@ public class ViewScoresActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scores);
         
+        textViewTitle = (TextView) findViewById(R.id.textViewTitle);
         listViewScores = (ListView) findViewById(R.id.listViewScores);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         textViewNoScores = (TextView) findViewById(R.id.textViewNoScores);
+        
+        titleFont = Typeface.createFromAsset(getAssets(), "fonts/title_font.ttf");
+        textViewTitle.setTypeface(titleFont);
         
         scoresList = new ArrayList<Score>();
         fileUtil = new FileUtil();

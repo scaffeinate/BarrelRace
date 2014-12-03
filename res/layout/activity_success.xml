@@ -9,8 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:layout_marginTop="70dp"
         android:ems="10"
         android:hint="@string/enter_name"
@@ -20,14 +20,28 @@
     </EditText>
 
     <TextView
-        android:id="@+id/textViewGameOver"
+        android:id="@+id/textViewBravo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextName"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/bravo"
+        android:textColor="@color/text_color"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:typeface="serif" />
+
+    <TextView
+        android:id="@+id/textViewGameOver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewBravo"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
         android:text="@string/game_complete"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/text_color" />
 
     <TextView
         android:id="@+id/textViewTime"
@@ -37,7 +51,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="@string/start_time"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textColor="@color/text_color"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        android:typeface="serif" />
 
     <Button
         android:id="@+id/buttonHome"
@@ -46,6 +63,10 @@
         android:layout_below="@+id/textViewTime"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="@string/home" />
+        android:background="@drawable/button_bg"
+        android:text="@string/home"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
