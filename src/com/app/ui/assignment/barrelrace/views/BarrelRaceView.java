@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -236,7 +235,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
     private void initializeObjects() {
         // TODO Auto-generated method stub
         
-        horse = new Horse();
+        horse = new Horse(context);
         
         /*Draw fences based on (x1,y1) and (x2,y2) points*/
         fence1 = new Fence(context, fence1StartX, fence1StartY, fence1StopX, fence1StopY);
@@ -251,7 +250,7 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
         barrel3 = new Barrel(context, barrel3X, barrel3Y, barrelRadius);
         
         mPaint = new Paint();
-        mPaint.setColor(Color.GREEN);
+        mPaint.setColor(context.getResources().getColor(R.color.barrel_circled_color));
     }
     
     /*Thread run()*/ 

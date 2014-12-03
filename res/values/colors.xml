@@ -3,8 +3,10 @@
 
     <color name="bg_color">#f4f4f4</color>
     <color name="text_color">#795548</color>
-    <color name="fence_color">#795548</color>
-    <color name="barrel_color">#795548</color>
+    <color name="fence_color">#4E342E</color>
+    <color name="horse_color">#795548</color>
+    <color name="barrel_color">#C62828</color>
+    <color name="barrel_circled_color">#4CAF50</color>
     <color name="button_bg_color">#795548</color>
     <color name="button_bg_color_pressed">#4E342E</color>
 

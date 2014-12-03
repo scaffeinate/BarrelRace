@@ -1,6 +1,5 @@
 package com.app.ui.assignment.barrelrace.objects;
 
-import java.util.Comparator;
 
 /**
 * @author Revanth Kumar

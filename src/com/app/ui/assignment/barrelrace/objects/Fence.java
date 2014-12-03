@@ -23,14 +23,14 @@ public class Fence {
     private float startX, startY, stopX, stopY;
     
     /*Constructor*/
-    public Fence(Context c, float startX, float startY, float stopX, float stopY) {
+    public Fence(Context context, float startX, float startY, float stopX, float stopY) {
         this.startX = startX;
         this.startY = startY;
         this.stopX = stopX;
         this.stopY = stopY;
         mPaint = new Paint();
         mPaint.setStyle(Style.FILL);
-        mPaint.setColor(c.getResources().getColor(R.color.fence_color));
+        mPaint.setColor(context.getResources().getColor(R.color.fence_color));
         mPaint.setStrokeWidth(5);
     }
 

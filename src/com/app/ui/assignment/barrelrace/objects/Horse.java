@@ -1,7 +1,9 @@
 package com.app.ui.assignment.barrelrace.objects;
 
+import com.app.ui.assignment.barrelrace.R;
+
+import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 
@@ -20,10 +22,10 @@ public class Horse {
     Paint mPaint;
     
     /*Constructor*/
-    public Horse() {
+    public Horse(Context context) {
         mPaint = new Paint();
         mPaint.setStyle(Style.FILL);
-        mPaint.setColor(Color.RED);
+        mPaint.setColor(context.getResources().getColor(R.color.horse_color));
     }
     
     /*Draw Horse*/
