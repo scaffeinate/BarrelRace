@@ -14,6 +14,15 @@ import android.widget.TextView;
 import com.app.ui.assignment.barrelrace.R;
 import com.app.ui.assignment.barrelrace.objects.Score;
 
+/**
+* @author Sudharsanan Muralidharan
+* @netid sxm149130
+* @since 11/25/2014
+* @purpose Homework Assignment 4 - Barrel Race Game CS 6301.022
+* @description Barrel Race Game for Android
+* @module CustomAdapter: BaseAdapter for HighScores List
+*/
+
 @SuppressLint("InflateParams")
 public class CustomAdapter extends BaseAdapter {
 

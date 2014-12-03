@@ -7,6 +7,15 @@ import android.graphics.Paint.Style;
 
 import com.app.ui.assignment.barrelrace.R;
 
+/**
+* @author Sudharsanan Muralidharan
+* @netid sxm149130
+* @since 11/25/2014
+* @purpose Homework Assignment 4 - Barrel Race Game CS 6301.022
+* @description Barrel Race Game for Android
+* @module Barrel: Barrel View Object
+*/
+
 public class Barrel {
 
     private Paint mPaint;

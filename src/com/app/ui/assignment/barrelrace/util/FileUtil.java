@@ -11,6 +11,15 @@ import android.os.Environment;
 
 import com.app.ui.assignment.barrelrace.objects.Score;
 
+/**
+* @author Revanth Kumar
+* @netid rxa142230
+* @since 11/25/2014
+* @purpose Homework Assignment 4 - Barrel Race Game CS 6301.015
+* @description Barrel Race Game for Android
+* @module FileUtil
+*/
+
 public class FileUtil {
     private FileOutputStream fileOutputStream;
     private BufferedReader bufferedReader;

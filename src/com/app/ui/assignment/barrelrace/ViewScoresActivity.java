@@ -16,6 +16,15 @@ import com.app.ui.assignment.barrelrace.objects.Score;
 import com.app.ui.assignment.barrelrace.util.CustomAdapter;
 import com.app.ui.assignment.barrelrace.util.FileUtil;
 
+/**
+* @author Revanth Kumar
+* @netid rxa142230
+* @since 11/25/2014
+* @purpose Homework Assignment 4 - Barrel Race Game CS 6301.015
+* @description Barrel Race Game for Android
+* @module ViewScoresActivity: View High Scores
+*/
+
 public class ViewScoresActivity extends Activity {
 
     private ListView listViewScores;
