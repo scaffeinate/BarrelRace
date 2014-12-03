@@ -135,23 +135,23 @@ public class BarrelRaceView extends SurfaceView implements Runnable, SensorEvent
         x = horseStartPosition[0];
         y = horseStartPosition[1];
         
-        horseRadius = 25;
-        barrelRadius = 25; 
+        horseRadius = width/45;
+        barrelRadius = width/45; 
         
         gateGap = (float) (horseRadius * 2.5);
         
-        leftMargin = rightMargin = 100;
-        topMargin = 30;
-        bottomMargin = 80;
+        leftMargin = rightMargin = width/7;
+        topMargin = height/10;
+        bottomMargin = height/7;
         
         barrel1X = (width/2);
-        barrel1Y = height-225;
+        barrel1Y = (float) (height-height/3.5);
         
-        barrel2X = (width/2)+215;
-        barrel2Y = 150;
+        barrel2X = (3*width)/4-rightMargin/2;
+        barrel2Y = height/4;
         
-        barrel3X = (width/2)-215;
-        barrel3Y = 150;
+        barrel3X = (width/4)+leftMargin/2;
+        barrel3Y = height/4;
         
         fence1StartX = leftMargin;
         fence1StartY = topMargin;
