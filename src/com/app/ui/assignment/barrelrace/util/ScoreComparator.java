@@ -13,6 +13,7 @@ import com.app.ui.assignment.barrelrace.objects.Score;
 * @module ScoreComparator
 */
 
+/*To Compare two Objects*/
 public class ScoreComparator implements Comparator<Score>{
 
     @Override

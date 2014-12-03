@@ -25,6 +25,7 @@ import com.app.ui.assignment.barrelrace.util.FileUtil;
 * @module ViewScoresActivity: View High Scores
 */
 
+/*View High Scores Activity*/
 public class ViewScoresActivity extends Activity {
 
     private ListView listViewScores;
@@ -47,21 +48,24 @@ public class ViewScoresActivity extends Activity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         textViewNoScores = (TextView) findViewById(R.id.textViewNoScores);
         
+        /*Set Custom Typeface to the title text*/
         titleFont = Typeface.createFromAsset(getAssets(), "fonts/title_font.ttf");
         textViewTitle.setTypeface(titleFont);
         
         scoresList = new ArrayList<Score>();
         fileUtil = new FileUtil();
     
+        /*Fetch from file in an AsyncTask*/
         new FetchScoresTask().execute();
     }
 
-    
+    /*AsyncTask to fetch values from file*/
     private class FetchScoresTask extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... params) {
             // TODO Auto-generated method stub
+            /*Fetch High scores and set it to CustomAdapter*/
             scoresList = fileUtil.fetchHighScores();
             adapter = new CustomAdapter(ViewScoresActivity.this, scoresList);
             return null;
@@ -71,16 +75,18 @@ public class ViewScoresActivity extends Activity {
         protected void onPostExecute(String result) {
             // TODO Auto-generated method stub
             super.onPostExecute(result);
+            /*Hide ProgressBar*/
             progressBar.setVisibility(View.GONE);
+            /*If no scores are available*/
             if(scoresList.size() == 0) {
                 Toast.makeText(getApplicationContext(), "No Scores Available", Toast.LENGTH_SHORT).show();
                 textViewNoScores.setVisibility(View.VISIBLE);
             } else {
+                /*Set list adapter*/
                 listViewScores.setAdapter(adapter);
             }
         }
     }
-
 
     @Override
     protected void onPause() {

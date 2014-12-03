@@ -26,6 +26,7 @@ import com.app.ui.assignment.barrelrace.util.TimerUtil;
 * @module SuccessActivity: Once Game Finishes Successfully
 */
 
+/*Activity launched when Game is successfully completed*/
 public class SuccessActivity extends Activity implements OnClickListener {
 
     private Button buttonHome;
@@ -48,10 +49,12 @@ public class SuccessActivity extends Activity implements OnClickListener {
         editTextName = (EditText) findViewById(R.id.editTextName);
         buttonHome.setOnClickListener(this);
         
+        /*FileUtil to write the values to a file*/
         fileUtil = new FileUtil();
         scoresList = new ArrayList<Score>();
         strBuilder = new StringBuilder();
         
+        /*Show the formatted timeElapsed value in textview*/ 
         try {
             timeElapsed = getIntent().getLongExtra("timeElapsed", 0L);
             textViewTime.setText(new TimerUtil().formatTime(timeElapsed));
@@ -61,6 +64,7 @@ public class SuccessActivity extends Activity implements OnClickListener {
         }
     }
 
+    /*Handle Button Onclick*/
     @Override
     public void onClick(View v) {
         // TODO Auto-generated method stub
@@ -72,10 +76,11 @@ public class SuccessActivity extends Activity implements OnClickListener {
                 scoresList = fileUtil.fetchHighScores();
                 scoresList.add(new Score(editTextName.getText().toString(), timeElapsed));
                 
+                /*Sort the List before writing*/
                 Collections.sort(scoresList, new ScoreComparator());
                 
                 int size = 10;
-                
+                /*Write only 10 top scores*/
                 if(scoresList.size() < 10) {
                     size = scoresList.size();
                 }
@@ -87,6 +92,7 @@ public class SuccessActivity extends Activity implements OnClickListener {
                     strBuilder.append(System.lineSeparator());
                 }
                 
+                /*Write to file*/
                 fileUtil.writeToFile(strBuilder.toString());
                 finish(); 
             }
@@ -100,6 +106,4 @@ public class SuccessActivity extends Activity implements OnClickListener {
         super.onPause();
         finish();
     }
-
-    
 }

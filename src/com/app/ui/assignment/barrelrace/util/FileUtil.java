@@ -20,10 +20,12 @@ import com.app.ui.assignment.barrelrace.objects.Score;
 * @module FileUtil
 */
 
+/*FileUtil class to write and read for file*/
 public class FileUtil {
     private FileOutputStream fileOutputStream;
     private BufferedReader bufferedReader;
     
+    /*Write to file*/
     public boolean writeToFile(String stringToWrite) {
         boolean success = false;
 

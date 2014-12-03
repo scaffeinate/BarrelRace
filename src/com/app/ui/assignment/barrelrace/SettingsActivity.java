@@ -22,6 +22,7 @@ import android.widget.Toast;
 * @module SettingsActivity: App Preferences Activity
 */
 
+/*Game  Preferences are handled in this Activity*/
 public class SettingsActivity extends Activity implements OnClickListener {
 
     private RadioGroup radioGroupDiff, radioGroupSound;
@@ -38,6 +39,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         
+        /*SharedPreferences Initialization*/
         sharedPreferences = getSharedPreferences("GAME_PREFS", Context.MODE_PRIVATE);
         sharedEditor = sharedPreferences.edit();
         
@@ -47,11 +49,14 @@ public class SettingsActivity extends Activity implements OnClickListener {
         
         buttonSave = (Button) findViewById(R.id.buttonSave);
         
+        /*Set Custom Typeface to the title*/
         titleFont = Typeface.createFromAsset(getAssets(), "fonts/title_font.ttf");
         textViewTitle.setTypeface(titleFont);
         
         buttonSave.setOnClickListener(this);
         
+        /*Check for already present values
+         * If present update the views*/
         String difficulty = sharedPreferences.getString("difficulty", "normal");
         
         if(difficulty.equals("easy")) {
@@ -69,6 +74,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
         }
     }
 
+    /*Handle button onCick*/
     @Override
     public void onClick(View v) {
         // TODO Auto-generated method stub
@@ -78,6 +84,7 @@ public class SettingsActivity extends Activity implements OnClickListener {
             radioDiffButton = (RadioButton) findViewById(radioGroupDiff.getCheckedRadioButtonId());
             radioSoundButton = (RadioButton) findViewById(radioGroupSound.getCheckedRadioButtonId());
             
+            /*Write the changes to Shared Preferences*/
             sharedEditor.putString("difficulty", radioDiffButton.getText().toString().toLowerCase());
             if(radioSoundButton.getText().toString().toLowerCase().equals("on")) {
                 sharedEditor.putBoolean("sound", true);
@@ -98,5 +105,4 @@ public class SettingsActivity extends Activity implements OnClickListener {
         super.onPause();
         finish();
     }
-
 }

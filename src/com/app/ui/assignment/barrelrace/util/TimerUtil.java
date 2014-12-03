@@ -9,6 +9,7 @@ package com.app.ui.assignment.barrelrace.util;
 * @module TimerUtil
 */
 
+/*Format Time based on the elapsedTime value*/
 public class TimerUtil {
         
     public String formatTime(long timeElapsed) {

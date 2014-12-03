@@ -11,17 +11,20 @@ import java.util.Comparator;
 * @module Score: Score Bean Object
 */
 
+/*Score Bean Class*/
 public class Score {
     
     private long scoreTime;
     private String name;
     
+    /*Constructor*/
     public Score(String name, long scoreTime) {
         // TODO Auto-generated constructor stub
         this.name = name;
         this.scoreTime = scoreTime;
     }
 
+    /*Getters and Setters*/
     public long getScoreTime() {
         return scoreTime;
     }
@@ -37,14 +40,4 @@ public class Score {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public static Comparator<Score> scoreComparator =
-            new Comparator<Score>() {
-        public int compare(Score s1 , Score s2) {
-            long l1 = s1.getScoreTime();
-            long l2 = s2.getScoreTime();
-            return (int) (l2-l1);
-        }
-    };
-
 }

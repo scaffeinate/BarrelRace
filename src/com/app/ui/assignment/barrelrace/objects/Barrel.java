@@ -16,6 +16,7 @@ import com.app.ui.assignment.barrelrace.R;
 * @module Barrel: Barrel View Object
 */
 
+/*Barrel View Class*/
 public class Barrel {
 
     private Paint mPaint;
@@ -26,6 +27,7 @@ public class Barrel {
         this.radius = radius;
     }
 
+    /*Constructor*/
     public Barrel(Context context, float x, float y, float radius) {
         mPaint = new Paint();
         mPaint.setStyle(Style.FILL);
@@ -36,10 +38,12 @@ public class Barrel {
         rightBottomQuad = rightTopQuad = leftTopQuad = leftBottomQuad = false;
     }
     
+    /*Draw Circle*/
     public void draw(Canvas c) {
         c.drawCircle(x, y, radius, mPaint);
     }
     
+    /*Getters and Setters*/
     public float getX() {
         return x;
     }
@@ -100,6 +104,7 @@ public class Barrel {
         this.leftBottomQuad = leftBottomQuad;
     }
     
+    /*If all the quadrants have been circled*/
     public boolean isCircled() {
         return isRightBottomQuad() && isRightTopQuad() &&
                 isLeftTopQuad() && isLeftBottomQuad();

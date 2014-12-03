@@ -20,8 +20,10 @@ import com.app.ui.assignment.barrelrace.views.BarrelRaceView;
 * @module GameActivity: Main Game Activity
 */
 
+/*Main Game Activity*/
 public class GameActivity extends Activity implements OnClickListener {
 
+    /*Initialize BarrelRaceView*/
     private BarrelRaceView barrelRaceView;
     private TextView textViewTime;
     private Button buttonStart;
@@ -30,10 +32,13 @@ public class GameActivity extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game);
+        
+        /*Get width and height of the Screen using point*/
         Display display = getWindowManager().getDefaultDisplay();
         Point point = new Point();
         display.getSize(point);
-        setContentView(R.layout.activity_game);
+        
         barrelRaceView = (BarrelRaceView) findViewById(R.id.barrelRaceView);
         textViewTime = (TextView) findViewById(R.id.textViewTime);
         buttonStart = (Button) findViewById(R.id.buttonStart);
@@ -42,6 +47,7 @@ public class GameActivity extends Activity implements OnClickListener {
         buttonStart.setOnClickListener(this);
     }
 
+    /*Handle onResume*/
     @Override
     protected void onResume() {
         // TODO Auto-generated method stub
@@ -49,6 +55,7 @@ public class GameActivity extends Activity implements OnClickListener {
         barrelRaceView.resume();
     }
 
+    /*Handle onPause*/
     @Override
     protected void onPause() {
         // TODO Auto-generated method stub
@@ -56,11 +63,13 @@ public class GameActivity extends Activity implements OnClickListener {
         barrelRaceView.pause();
     }
 
+    /*Handle start button onClick*/
     @Override
     public void onClick(View v) {
         // TODO Auto-generated method stub
         switch(v.getId()) {
         case R.id.buttonStart:
+            /*Start Timer on button click*/
             barrelRaceView.startTimer();
             break;
         }

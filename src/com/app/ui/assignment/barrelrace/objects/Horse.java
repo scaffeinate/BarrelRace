@@ -14,16 +14,19 @@ import android.graphics.Paint.Style;
 * @module Horse: Horse View Object
 */
 
+/*Horse View Class*/
 public class Horse {
     
     Paint mPaint;
     
+    /*Constructor*/
     public Horse() {
         mPaint = new Paint();
         mPaint.setStyle(Style.FILL);
         mPaint.setColor(Color.RED);
     }
     
+    /*Draw Horse*/
     public void draw(float x, float y, float horseRadius, Canvas c) {
         c.drawCircle(x, y, horseRadius, mPaint);
     }

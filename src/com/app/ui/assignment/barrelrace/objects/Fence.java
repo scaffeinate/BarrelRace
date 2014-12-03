@@ -16,11 +16,13 @@ import com.app.ui.assignment.barrelrace.R;
 * @module Fence: Fence View Object
 */
 
+/*Fence View Class*/
 public class Fence {
     
     private Paint mPaint;
     private float startX, startY, stopX, stopY;
     
+    /*Constructor*/
     public Fence(Context c, float startX, float startY, float stopX, float stopY) {
         this.startX = startX;
         this.startY = startY;
@@ -32,10 +34,12 @@ public class Fence {
         mPaint.setStrokeWidth(5);
     }
 
+    /*Draw Circle*/
     public void draw(Canvas c) {
         c.drawLine(startX, startY, stopX, stopY, mPaint);
     }
     
+    /*Getters and Setters*/
     public float getStartX() {
         return startX;
     }

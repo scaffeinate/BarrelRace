@@ -23,6 +23,7 @@ import com.app.ui.assignment.barrelrace.objects.Score;
 * @module CustomAdapter: BaseAdapter for HighScores List
 */
 
+/*BaseAdapter for the High scores List*/
 @SuppressLint("InflateParams")
 public class CustomAdapter extends BaseAdapter {
 
@@ -30,6 +31,7 @@ public class CustomAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private TimerUtil timerUtil;
     
+    /*Constructor*/
     public CustomAdapter(Activity activity, ArrayList<Score> scoresList) {
         this.scoresList = scoresList;
         inflater = (LayoutInflater) activity
@@ -55,10 +57,12 @@ public class CustomAdapter extends BaseAdapter {
         return position;
     }
 
+    /*ViewHolder Class*/
     public static class ViewHolder {
         public TextView textViewName, textViewScore;
     }
     
+    /*getView of each listItem*/
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub

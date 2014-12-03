@@ -18,6 +18,7 @@ import android.widget.TextView;
 * @module MainActivty: Launcher Activity
 */
 
+/*Launcher Activity*/
 public class MainActivity extends Activity implements OnClickListener {
 
     private Button buttonPlay, buttonScores, buttonSettings;
@@ -34,15 +35,17 @@ public class MainActivity extends Activity implements OnClickListener {
         buttonScores = (Button) findViewById(R.id.buttonScores);
         buttonSettings = (Button) findViewById(R.id.buttonSettings);
         
+        /*Set Custom Typeface to the TitleText*/
         titleFont = Typeface.createFromAsset(getAssets(), "fonts/title_font.ttf");
-        
         textViewTitle.setTypeface(titleFont);
         
+        /*Handle button Clicks*/
         buttonPlay.setOnClickListener(this);
         buttonScores.setOnClickListener(this);
         buttonSettings.setOnClickListener(this);
     }
 
+    /*On Button click start activities*/
     @Override
     public void onClick(View v) {
         // TODO Auto-generated method stub

@@ -16,6 +16,7 @@ import android.widget.Button;
 * @module FailureActivity: Once Game Fails
 */
 
+/*Activity Launched when Game Fails to be completed successfully*/
 public class FailureActivity extends Activity implements OnClickListener {
 
     private Button buttonTryAgain, buttonHome;
@@ -33,6 +34,7 @@ public class FailureActivity extends Activity implements OnClickListener {
         buttonHome.setOnClickListener(this);
     }
 
+    /*Handle button Onclick*/ 
     @Override
     public void onClick(View v) {
         // TODO Auto-generated method stub
