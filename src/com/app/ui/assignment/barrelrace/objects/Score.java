@@ -3,9 +3,6 @@ package com.app.ui.assignment.barrelrace.objects;
 
 /**
 * @author Revanth Kumar
-* @netid rxa142230
-* @since 11/25/2014
-* @purpose Homework Assignment 4 - Barrel Race Game CS 6301.015
 * @description Barrel Race Game for Android
 * @module Score: Score Bean Object
 */

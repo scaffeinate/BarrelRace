@@ -20,9 +20,6 @@ import com.app.ui.assignment.barrelrace.util.TimerUtil;
 
 /**
 * @author Vasu Irneni
-* @netid vxi140330
-* @since 11/25/2014
-* @purpose Homework Assignment 4 - Barrel Race Game CS 6301.015
 * @description Barrel Race Game for Android
 * @module SuccessActivity: Once Game Finishes Successfully
 */
