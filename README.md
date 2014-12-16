@@ -23,6 +23,15 @@ Screenshots:
 
 ![game_screen](https://cloud.githubusercontent.com/assets/1825853/5447771/a9f3d4f8-8498-11e4-9f0a-8a0ba45ea8c5.png)
 
+Pull Requests:
+-------------
+1. Fork this repo.
+2. Make improvements.
+3. Send me a PR with your changes.
+4. Write down the changes you have done while creating the Pull Request.
+
+I will be happy to Review and Merge it!
+
 Issues:
 -------
 If you have any issues with the working of it you can raise issues here [https://github.com/sudharti/BarrelRace/issues](https://github.com/sudharti/BarrelRace/issues)
