@@ -21,7 +21,11 @@ Screenshots:
 
 **Game Screen:**
 
-![game_screen](https://cloud.githubusercontent.com/assets/1825853/5447616/375b4ba8-8496-11e4-98b6-567ac7af5649.png)
+![game_screen](https://cloud.githubusercontent.com/assets/1825853/5447771/a9f3d4f8-8498-11e4-9f0a-8a0ba45ea8c5.png)
+
+Issues:
+-------
+If you have any issues with the working of it you can raise issues here [https://github.com/sudharti/BarrelRace/issues](https://github.com/sudharti/BarrelRace/issues)
 
 License:
 ========
