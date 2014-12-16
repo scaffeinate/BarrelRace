@@ -30,6 +30,8 @@ Getting Started:
 3. Connect your Device.(Since Emulators don't support Motion Sensors so well [http://stackoverflow.com/questions/10677128/sensors-in-android-emulator](http://stackoverflow.com/questions/10677128/sensors-in-android-emulator), it's better to run it on a Device)
 4. Run the App
 
+**APK:** If you want to directly run the apk on your phone without using Eclipse, you can find the signed apk [here](https://github.com/sudharti/BarrelRace/blob/master/release/BarrelRace%20v1.0.apk?raw=true)
+
 Pull Requests:
 -------------
 1. Fork this repo
