@@ -22,3 +22,7 @@ Screenshots:
 **Game Screen:**
 
 ![game_screen](https://cloud.githubusercontent.com/assets/1825853/5447616/375b4ba8-8496-11e4-98b6-567ac7af5649.png)
+
+License:
+========
+This project is licensed under the terms of [MIT License](http://opensource.org/licenses/MIT). You can view it here [LICENSE](https://github.com/sudharti/BarrelRace/blob/master/LICENSE)
