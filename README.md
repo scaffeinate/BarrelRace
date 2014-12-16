@@ -23,12 +23,19 @@ Screenshots:
 
 ![game_screen](https://cloud.githubusercontent.com/assets/1825853/5447771/a9f3d4f8-8498-11e4-9f0a-8a0ba45ea8c5.png)
 
+Getting Started:
+----------------
+1. Clone or Fork this Repo (Or you can download the v1.0 [Source](https://github.com/sudharti/BarrelRace/archive/v1.0.zip))
+2. Import Existing Android code into Eclipse
+3. Connect your Device.(Since Emulators don't support Motion Sensors so well [http://stackoverflow.com/questions/10677128/sensors-in-android-emulator](http://stackoverflow.com/questions/10677128/sensors-in-android-emulator), it's better to run it on a Device)
+4. Run the App
+
 Pull Requests:
 -------------
-1. Fork this repo.
-2. Make improvements.
-3. Send me a PR with your changes.
-4. Write down the changes you have done while creating the Pull Request.
+1. Fork this repo
+2. Make improvements
+3. Send me a PR with your changes
+4. Write down the changes you have done while creating the Pull Request
 
 I will be happy to Review and Merge it!
 
